@@ -22,14 +22,6 @@ const Page = () => {
       setTotalPages(res.totalPages);
       setTotalValue(getTotalAmount(res.content));
     });
-  }, []);
-
-  useEffect(() => {
-    getPageableOutcomes({ page: page, size: 10 }).then((res) => {
-      setOutcomes(res.content);
-      setTotalPages(res.totalPages);
-      setTotalValue(getTotalAmount(res.content));
-    });
   }, [page]);
 
   const onPageChange = (page: number) => {

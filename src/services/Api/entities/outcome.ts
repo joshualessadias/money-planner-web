@@ -41,7 +41,7 @@ export const getPageableOutcomes = async ({
                                               filters = [],
                                           }: ListDisciplinesProps) => {
     const params = {
-        page: page - 1,
+        page,
         size,
     };
     // const sanatizedParams = sanatizeFilters({ filters, params });

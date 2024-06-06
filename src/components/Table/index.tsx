@@ -50,7 +50,7 @@ const CustomOutcomeTable = ({ data, totalPages, onPageChange }: CustomTableProps
                     </Table.Cell>
                     <Table.Cell>{formatDate(outcome.date)}</Table.Cell>
                     <Table.Cell className="whitespace-nowrap">
-                      {outcome.category.name}
+                      {outcome.category ? outcome.category.name : "-"}
                     </Table.Cell>
                     <Table.Cell className="whitespace-nowrap">
                       {outcome.paymentMethod.name}
