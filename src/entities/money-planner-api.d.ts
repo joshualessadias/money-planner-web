@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2024-05-31 17:24:05.
+// Generated using typescript-generator version 3.2.1263 on 2024-06-07 13:30:11.
 
 export interface AppUserFilterRequestDTO extends BaseFilter {
     name: string;
@@ -97,6 +97,10 @@ export interface OutcomeCategoryResponseDTO {
     description: string;
 }
 
+export interface OutcomeKpiResponseDTO {
+    totalValue: number;
+}
+
 export interface OutcomeResponseDTO {
     id: number;
     description: string;
@@ -139,10 +143,10 @@ export interface Sort extends Streamable<Order> {
 }
 
 export interface Pageable {
-    pageSize: number;
-    pageNumber: number;
     offset: number;
     sort: Sort;
+    pageSize: number;
+    pageNumber: number;
     paged: boolean;
     unpaged: boolean;
 }
@@ -153,8 +157,8 @@ export interface Slice<T> extends Streamable<T> {
     number: number;
     sort: Sort;
     first: boolean;
-    pageable: Pageable;
     last: boolean;
+    pageable: Pageable;
     numberOfElements: number;
 }
 
@@ -167,8 +171,8 @@ export interface Order {
     property: string;
     ignoreCase: boolean;
     nullHandling: NullHandling;
-    ascending: boolean;
     descending: boolean;
+    ascending: boolean;
 }
 
 export interface Iterable<T> {

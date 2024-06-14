@@ -1,42 +1,52 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CustomOutcomeTable from "@/components/Table";
 import { OutcomeResponseDTO } from "@/entities/money-planner-api";
-import { getPageableOutcomes } from "@/services/Api/entities/outcome";
+import {
+  getOutcomesKpi,
+  getPageableOutcomes,
+} from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
+import OutcomeTable from "../../../components/OutcomeTable";
+import { Paper } from "@mui/material";
 
 const Page = () => {
   const [outcomes, setOutcomes] = useState<OutcomeResponseDTO[]>([]);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalElements, setTotalElements] = useState<number>(0);
   const [totalValue, setTotalValue] = useState<number>(0);
-  const [page, setPage] = useState<number>(1);
-
-  const getTotalAmount = (outcomes: OutcomeResponseDTO[]) => {
-    return outcomes.reduce((acc, outcome) => acc + outcome.value, 0);
-  };
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
   useEffect(() => {
-    getPageableOutcomes({ page: page, size: 10 }).then((res) => {
+    getPageableOutcomes({ page: page, size: rowsPerPage }).then((res) => {
       setOutcomes(res.content);
-      setTotalPages(res.totalPages);
-      setTotalValue(getTotalAmount(res.content));
+      setTotalElements(res.totalElements);
     });
-  }, [page]);
+    getOutcomesKpi().then((res) => {
+      setTotalValue(res.totalValue);
+    });
+  }, [page, rowsPerPage]);
 
-  const onPageChange = (page: number) => {
+  function handlePageChange(page: number) {
     setPage(page);
-  };
+  }
+
+  function handleRowsPerPageChange(rowsPerPage: number) {
+    setRowsPerPage(rowsPerPage);
+  }
 
   return (
     <div>
       {/*<TableHeader />*/}
       <OutcomeInsights total={totalValue} />
-      <CustomOutcomeTable
-        data={outcomes}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-      />
+      <Paper elevation={8} className="p-4 m-4">
+        <OutcomeTable
+          data={outcomes}
+          totalElements={totalElements}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
+      </Paper>
     </div>
   );
 };

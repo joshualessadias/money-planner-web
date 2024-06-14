@@ -68,6 +68,9 @@ const useAuth = () => {
 
   const handleLogin = async (authRequest: AuthenticationRequestDTO) => {
     setLoading(true);
+    
+    console.log("Removing Token");
+    localStorage.removeItem("token");
 
     try {
       const response: AxiosResponse<AuthenticationResponseDTO> = await api.post(
