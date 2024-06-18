@@ -3,7 +3,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TablePagination,
   TableRow,
 } from "@mui/material";
@@ -11,22 +10,29 @@ import React, { useState } from "react";
 import { OutcomeResponseDTO } from "@/entities/money-planner-api";
 import formatCurrency from "@/helpers/currencyMask";
 import formatDate from "@/helpers/dateMask";
+import OutcomeTableHead from "@/components/OutcomeTable/OutcomeTableHead";
+import { Order } from "@/types";
 
 interface OutcomeTableProps {
   data: OutcomeResponseDTO[];
   totalElements: number;
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (rowsPerPage: number) => void;
+  onOrderChange: (orderedField: keyof OutcomeResponseDTO, order: Order) => void;
 }
 
-const OutcomeTable = ({
+function OutcomeTable({
   data,
   totalElements,
   onPageChange,
   onRowsPerPageChange,
-}: OutcomeTableProps) => {
+  onOrderChange,
+}: OutcomeTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [orderedField, setOrderedField] =
+    useState<keyof OutcomeResponseDTO>("date");
+  const [order, setOrder] = useState<Order>("desc");
 
   function handlePageChange(e: any, page: number) {
     setCurrentPage(page);
@@ -39,22 +45,25 @@ const OutcomeTable = ({
     onRowsPerPageChange(value);
   }
 
-  console.log(currentPage);
+  function handleRequestSort(
+    event: React.MouseEvent<unknown>,
+    property: keyof OutcomeResponseDTO
+  ) {
+    const isAsc = orderedField === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderedField(property);
+    onOrderChange(property, isAsc ? "desc" : "asc");
+  }
 
   return (
     <>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Description</TableCell>
-              <TableCell align="right">Value</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Payment Method</TableCell>
-              <TableCell>Bank</TableCell>
-            </TableRow>
-          </TableHead>
+          <OutcomeTableHead
+            onRequestSort={handleRequestSort}
+            order={order}
+            orderBy={orderedField}
+          />
           <TableBody>
             {data.map((data) => (
               <TableRow
@@ -88,6 +97,6 @@ const OutcomeTable = ({
       ></TablePagination>
     </>
   );
-};
+}
 
 export default OutcomeTable;

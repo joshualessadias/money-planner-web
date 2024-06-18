@@ -5,33 +5,32 @@ import {
   OutcomeResponseDTO,
   Page,
 } from "@/entities/money-planner-api";
+import buildParams, { FilterProps } from "@/helpers/apiParam";
 
 interface ListDisciplinesProps {
   page: number;
   size: number;
-  filters?: FiltersProps | [];
-}
-
-interface FiltersProps {
-  name?: string;
-  type?: string;
-  date?: string;
-  sort?: string;
+  orderBy?: string;
+  filters?: FilterProps | [];
 }
 
 export const getPageableOutcomes = async ({
   page,
   size,
+  orderBy,
   filters = [],
 }: ListDisciplinesProps) => {
   const params = {
     page: page + 1,
     size,
+    orderBy,
   };
+  const builtParams = buildParams({ filters, params });
+
   const response: AxiosResponse<Page<OutcomeResponseDTO>> = await api.get(
     "/outcome/pageable",
     {
-      params: params,
+      params: builtParams,
     }
   );
   return response.data;
