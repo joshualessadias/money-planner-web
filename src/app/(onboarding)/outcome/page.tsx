@@ -16,29 +16,38 @@ const Page = () => {
   const [totalElements, setTotalElements] = useState<number>(0);
   const [totalValue, setTotalValue] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [size, setSize] = useState<number>(10);
   const [orderBy, setOrderBy] = useState<string>("date:desc");
+  const [dateFilter, setDateFilter] = useState<{
+    initialDate?: number;
+    finalDate?: number;
+  }>({});
 
   useEffect(() => {
     getPageableOutcomes({
-      page: page,
-      size: rowsPerPage,
-      orderBy: orderBy,
+      page,
+      size,
+      orderBy,
+      initialDate: dateFilter.initialDate,
+      finalDate: dateFilter.finalDate,
     }).then((res) => {
       setOutcomes(res.content);
       setTotalElements(res.totalElements);
     });
-    getOutcomesKpi().then((res) => {
+    getOutcomesKpi({
+      initialDate: dateFilter.initialDate,
+      finalDate: dateFilter.finalDate,
+    }).then((res) => {
       setTotalValue(res.totalValue);
     });
-  }, [page, rowsPerPage, orderBy]);
+  }, [page, size, orderBy, dateFilter]);
 
   function handlePageChange(page: number) {
     setPage(page);
   }
 
   function handleRowsPerPageChange(rowsPerPage: number) {
-    setRowsPerPage(rowsPerPage);
+    setSize(rowsPerPage);
   }
 
   function handleOrderChange(
@@ -46,6 +55,10 @@ const Page = () => {
     order: Order
   ) {
     setOrderBy(`${orderedField}:${order}`);
+  }
+
+  function handleDateRangeChange(initialDate?: number, finalDate?: number) {
+    setDateFilter({ initialDate, finalDate });
   }
 
   return (
@@ -58,6 +71,7 @@ const Page = () => {
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
           onOrderChange={handleOrderChange}
+          onDateRangeChange={handleDateRangeChange}
         />
       </Paper>
     </div>

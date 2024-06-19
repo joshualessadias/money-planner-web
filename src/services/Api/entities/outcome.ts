@@ -5,40 +5,58 @@ import {
   OutcomeResponseDTO,
   Page,
 } from "@/entities/money-planner-api";
-import buildParams, { FilterProps } from "@/helpers/apiParam";
 
-interface ListDisciplinesProps {
+interface PageableFilterProps {
   page: number;
   size: number;
-  orderBy?: string;
-  filters?: FilterProps | [];
+  orderBy: string;
+  initialDate?: number;
+  finalDate?: number;
 }
 
-export const getPageableOutcomes = async ({
+interface GetOutcomesKpiProps {
+  initialDate?: number;
+  finalDate?: number;
+}
+
+export async function getPageableOutcomes({
   page,
   size,
   orderBy,
-  filters = [],
-}: ListDisciplinesProps) => {
+  initialDate,
+  finalDate,
+}: PageableFilterProps) {
   const params = {
     page: page + 1,
     size,
     orderBy,
+    initialDate: initialDate || null,
+    finalDate: finalDate || null,
   };
-  const builtParams = buildParams({ filters, params });
 
   const response: AxiosResponse<Page<OutcomeResponseDTO>> = await api.get(
     "/outcome/pageable",
     {
-      params: builtParams,
+      params,
     }
   );
   return response.data;
-};
+}
 
-export const getOutcomesKpi = async () => {
+export async function getOutcomesKpi({
+  initialDate,
+  finalDate,
+}: GetOutcomesKpiProps) {
+  const params = {
+    initialDate: initialDate || null,
+    finalDate: finalDate || null,
+  };
+
   const response: AxiosResponse<OutcomeKpiResponseDTO> = await api.get(
-    "/outcome/kpi"
+    "/outcome/kpi",
+    {
+      params,
+    }
   );
   return response.data;
-};
+}

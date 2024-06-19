@@ -12,6 +12,7 @@ import formatCurrency from "@/helpers/currencyMask";
 import formatDate from "@/helpers/dateMask";
 import OutcomeTableHead from "@/components/OutcomeTable/OutcomeTableHead";
 import { Order } from "@/types";
+import OutcomeTableToolbar from "@/components/OutcomeTable/OutcomeTableToolbar";
 
 interface OutcomeTableProps {
   data: OutcomeResponseDTO[];
@@ -19,6 +20,7 @@ interface OutcomeTableProps {
   onPageChange: (page: number) => void;
   onRowsPerPageChange: (rowsPerPage: number) => void;
   onOrderChange: (orderedField: keyof OutcomeResponseDTO, order: Order) => void;
+  onDateRangeChange: (initialDate?: number, finalDate?: number) => void;
 }
 
 function OutcomeTable({
@@ -27,6 +29,7 @@ function OutcomeTable({
   onPageChange,
   onRowsPerPageChange,
   onOrderChange,
+  onDateRangeChange,
 }: OutcomeTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -55,8 +58,13 @@ function OutcomeTable({
     onOrderChange(property, isAsc ? "desc" : "asc");
   }
 
+  function handleFilterClick(initialDate?: number, finalDate?: number) {
+    onDateRangeChange(initialDate, finalDate);
+  }
+
   return (
     <>
+      <OutcomeTableToolbar onFilterClick={handleFilterClick} />
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <OutcomeTableHead
