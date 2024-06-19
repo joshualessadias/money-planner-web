@@ -8,7 +8,7 @@ import {
 } from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
-import { Paper } from "@mui/material";
+import { Paper, Container } from "@mui/material";
 import { Order } from "@/types";
 
 const Page = () => {
@@ -62,7 +62,7 @@ const Page = () => {
   }
 
   return (
-    <div>
+    <Container maxWidth="lg">
       <OutcomeInsights total={totalValue} />
       <Paper elevation={8} className="p-4 m-4">
         <OutcomeTable
@@ -74,7 +74,7 @@ const Page = () => {
           onDateRangeChange={handleDateRangeChange}
         />
       </Paper>
-    </div>
+    </Container>
   );
 };
 

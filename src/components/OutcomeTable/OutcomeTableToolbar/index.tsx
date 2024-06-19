@@ -26,8 +26,12 @@ function OutcomeTableToolbar({ onFilterClick }: OutcomeTableToolbarProps) {
   }
 
   return (
-    <Stack direction="row" justifyContent="space-between">
-      <div>
+    <Stack
+      direction={{ sm: "row", xs: "column" }}
+      spacing={{ xs: 1, sm: 2 }}
+      justifyContent="space-between"
+    >
+      <Stack direction="row">
         <LocalizationProvider
           dateAdapter={AdapterDayjs}
           // TODO: implement global localization provider
@@ -45,7 +49,7 @@ function OutcomeTableToolbar({ onFilterClick }: OutcomeTableToolbarProps) {
             onChange={(newValue) => setFinalValue(newValue)}
           />
         </LocalizationProvider>
-      </div>
+      </Stack>
       <Button
         variant="contained"
         startIcon={<FilterAlt />}
