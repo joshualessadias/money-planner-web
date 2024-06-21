@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL: string = "http://localhost:8080/api/v1";
+const baseURL = process.env.NEXT_PUBLIC_MONEY_PLANNER_API_URL;
 
 export const api = axios.create({
   baseURL: baseURL,
