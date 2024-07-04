@@ -8,8 +8,10 @@ import {
 } from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
-import { Paper, Container } from "@mui/material";
+import { Button, Container, Paper, Stack } from "@mui/material";
 import { Order } from "@/types";
+import { Add } from "@mui/icons-material";
+import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 
 const Page = () => {
   const [outcomes, setOutcomes] = useState<OutcomeResponseDTO[]>([]);
@@ -22,6 +24,7 @@ const Page = () => {
     initialDate?: number;
     finalDate?: number;
   }>({});
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getPageableOutcomes({
@@ -61,20 +64,54 @@ const Page = () => {
     setDateFilter({ initialDate, finalDate });
   }
 
+  function handleOnCreateOutcomeClick() {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  }
+
+  function handleCreateOutcomeSubmit() {
+    console.log("outcomeCreated");
+  }
+
   return (
-    <Container maxWidth="lg">
-      <OutcomeInsights total={totalValue} />
-      <Paper elevation={8} className="p-4 m-4">
-        <OutcomeTable
-          data={outcomes}
-          totalElements={totalElements}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleRowsPerPageChange}
-          onOrderChange={handleOrderChange}
-          onDateRangeChange={handleDateRangeChange}
-        />
-      </Paper>
-    </Container>
+    <div>
+      <Container maxWidth="lg">
+        <Stack
+          className="p-4"
+          direction={{ sm: "row", xs: "column" }}
+          spacing={{ xs: 1, sm: 2 }}
+          justifyContent="space-between"
+        >
+          <OutcomeInsights total={totalValue} />
+          <Button
+            className="h-9 self-end"
+            variant="contained"
+            startIcon={<Add />}
+            onClick={handleOnCreateOutcomeClick}
+          >
+            Criar Gasto
+          </Button>
+        </Stack>
+        <Paper elevation={8} className="p-4 m-4">
+          <OutcomeTable
+            data={outcomes}
+            totalElements={totalElements}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleRowsPerPageChange}
+            onOrderChange={handleOrderChange}
+            onDateRangeChange={handleDateRangeChange}
+          />
+        </Paper>
+      </Container>
+      <CreateOutcomeModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleCreateOutcomeSubmit}
+      />
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ interface OutcomeInsightsProps {
 
 const OutcomeInsights = ({ total }: OutcomeInsightsProps) => {
   return (
-    <div className="p-4">
+    <div>
       <Card href="#" className="max-w-sm">
         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {currencyMask(total)}
