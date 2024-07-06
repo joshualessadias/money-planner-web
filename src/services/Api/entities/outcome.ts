@@ -5,6 +5,7 @@ import {
   OutcomeResponseDTO,
   Page,
 } from "@/entities/money-planner-api";
+import { OutcomeRequestDTO } from "@/entities/outcome";
 
 interface PageableFilterProps {
   page: number;
@@ -57,6 +58,14 @@ export async function getOutcomesKpi({
     {
       params,
     }
+  );
+  return response.data;
+}
+
+export async function createOutcome(request: OutcomeRequestDTO) {
+  const response: AxiosResponse<OutcomeResponseDTO> = await api.post(
+    "/outcome",
+    request
   );
   return response.data;
 }

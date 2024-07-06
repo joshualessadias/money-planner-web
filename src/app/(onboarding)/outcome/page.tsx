@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { OutcomeResponseDTO } from "@/entities/money-planner-api";
 import {
+  createOutcome,
   getOutcomesKpi,
   getPageableOutcomes,
 } from "@/services/Api/entities/outcome";
@@ -12,6 +13,7 @@ import { Button, Container, Paper, Stack } from "@mui/material";
 import { Order } from "@/types";
 import { Add } from "@mui/icons-material";
 import CreateOutcomeModal from "@/components/CreateOutcomeModal";
+import { OutcomeRequestDTO } from "@/entities/outcome";
 
 const Page = () => {
   const [outcomes, setOutcomes] = useState<OutcomeResponseDTO[]>([]);
@@ -72,8 +74,13 @@ const Page = () => {
     setIsModalOpen(false);
   }
 
-  function handleCreateOutcomeSubmit() {
-    console.log("outcomeCreated");
+  function handleCreateOutcomeSubmit(dto: OutcomeRequestDTO) {
+    console.log("creating outcome...");
+    createOutcome(dto).then((response) => {
+      console.log("outcome created", response);
+      setIsModalOpen(false);
+      setPage(0);
+    });
   }
 
   return (

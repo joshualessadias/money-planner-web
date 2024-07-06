@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  Modal,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CreateOutcomeForm from "@/components/CreateOutcomeModal/CreateOutcomeForm";
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,14 +10,19 @@ import {
 import { getOutcomeCategoryList } from "@/services/Api/entities/outcomeCategory";
 import { getPaymentMethodList } from "@/services/Api/entities/paymentMethod";
 import { getBankList } from "@/services/Api/entities/bank";
+import { OutcomeRequestDTO } from "@/entities/outcome";
 
 interface CreateOutcomeModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: (dto: OutcomeRequestDTO) => void;
 }
 
-function CreateOutcomeModal({ open, onClose }: CreateOutcomeModalProps) {
+function CreateOutcomeModal({
+  open,
+  onClose,
+  onSubmit,
+}: CreateOutcomeModalProps) {
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -58,6 +56,10 @@ function CreateOutcomeModal({ open, onClose }: CreateOutcomeModalProps) {
     });
   }, []);
 
+  function handleSubmit(dto: OutcomeRequestDTO) {
+    onSubmit(dto);
+  }
+
   return (
     <Modal
       open={open}
@@ -78,10 +80,8 @@ function CreateOutcomeModal({ open, onClose }: CreateOutcomeModalProps) {
           outcomeCategoryList={outcomeCategoryList}
           paymentMethodList={paymentMethodList}
           bankList={bankList}
+          onSubmit={handleSubmit}
         />
-        <Button className="mt-4 float-right" variant="contained">
-          Criar
-        </Button>
       </Box>
     </Modal>
   );
