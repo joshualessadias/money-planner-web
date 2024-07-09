@@ -25,7 +25,7 @@ export const useAlertSnackbar = () => {
   return context;
 };
 
-export const AlertSnackbarProvider: React.FC = ({ children }: any) => {
+export const AlertSnackbarProvider = ({ children }: any) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState<
