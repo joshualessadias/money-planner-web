@@ -17,9 +17,10 @@ import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 
 interface OutcomeTableProps {
   dateFilter: { initialDate?: number; finalDate?: number };
+  updateOutcomes: boolean;
 }
 
-function OutcomeTable({ dateFilter }: OutcomeTableProps) {
+function OutcomeTable({ dateFilter, updateOutcomes }: OutcomeTableProps) {
   const [orderedField, setOrderedField] =
     useState<keyof OutcomeResponseDTO>("date");
   const [order, setOrder] = useState<Order>("desc");
@@ -52,8 +53,9 @@ function OutcomeTable({ dateFilter }: OutcomeTableProps) {
     dateFilter.initialDate,
     orderBy,
     page,
-    showMessage,
     size,
+    updateOutcomes,
+    showMessage,
   ]);
 
   function handlePageChange(_e: any, page: number) {
@@ -70,6 +72,7 @@ function OutcomeTable({ dateFilter }: OutcomeTableProps) {
   ) {
     const isAsc = orderedField === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(`${property}:${isAsc ? "desc" : "asc"}`);
     setOrderedField(property);
   }
 

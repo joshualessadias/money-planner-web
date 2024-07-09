@@ -13,7 +13,7 @@ import OutcomeTableToolbar from "@/components/OutcomeTable/OutcomeTableToolbar";
 
 const Page = () => {
   const [totalValue, setTotalValue] = useState<number>(0);
-
+  const [updateOutcomes, setUpdateOutcomes] = useState<boolean>(false);
   const [dateFilter, setDateFilter] = useState<{
     initialDate?: number;
     finalDate?: number;
@@ -33,7 +33,7 @@ const Page = () => {
       const data = res.data;
       setTotalValue(data.totalValue);
     });
-  }, [dateFilter, showMessage]);
+  }, [dateFilter, updateOutcomes, showMessage]);
 
   function handleDateRangeChange(initialDate?: number, finalDate?: number) {
     setDateFilter({ initialDate, finalDate });
@@ -51,9 +51,10 @@ const Page = () => {
     createOutcome(dto).then((res) => {
       if (res.status != 201) {
         showMessage("Erro ao criar gasto", "error");
-        return;
+      } else {
+        showMessage("Gasto criado com sucesso", "success");
+        setUpdateOutcomes(!updateOutcomes);
       }
-      showMessage("Gasto criado com sucesso", "success");
       setIsModalOpen(false);
     });
   }
@@ -79,7 +80,10 @@ const Page = () => {
         </Stack>
         <Paper elevation={8} className="p-4 m-4">
           <OutcomeTableToolbar onFilterClick={handleDateRangeChange} />
-          <OutcomeTable dateFilter={dateFilter} />
+          <OutcomeTable
+            dateFilter={dateFilter}
+            updateOutcomes={updateOutcomes}
+          />
         </Paper>
       </Container>
       <CreateOutcomeModal
