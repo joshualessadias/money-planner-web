@@ -46,11 +46,7 @@ function CreateOutcomeForm({
   }
 
   return (
-    <Box
-      component="form"
-      sx={{ "& .MuiTextField-root": { mt: 2 } }}
-      onSubmit={handleSubmit}
-    >
+    <Box sx={{ "& .MuiTextField-root": { mt: 2 } }}>
       <TextField
         id="description"
         required
@@ -148,7 +144,11 @@ function CreateOutcomeForm({
         value={installments}
         onChange={(e) => setInstallments(Number(e.target.value))}
       />
-      <Button className="mt-4 float-right" variant="contained" type="submit">
+      <Button
+        className="mt-4 float-right"
+        variant="contained"
+        onClick={handleSubmit}
+      >
         Criar
       </Button>
     </Box>

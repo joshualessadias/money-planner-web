@@ -1,28 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { OutcomeResponseDTO } from "@/entities/money-planner-api";
-import {
-  createOutcome,
-  getOutcomesKpi,
-  getPageableOutcomes,
-} from "@/services/Api/entities/outcome";
+import { createOutcome, getOutcomesKpi } from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
 import { Button, Container, Paper, Stack } from "@mui/material";
-import { Order } from "@/types";
 import { Add } from "@mui/icons-material";
 import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
+import OutcomeTableToolbar from "@/components/OutcomeTable/OutcomeTableToolbar";
 
 const Page = () => {
-  const [outcomes, setOutcomes] = useState<OutcomeResponseDTO[]>([]);
-  const [totalElements, setTotalElements] = useState<number>(0);
   const [totalValue, setTotalValue] = useState<number>(0);
-  const [page, setPage] = useState<number>(0);
-  const [size, setSize] = useState<number>(10);
-  const [orderBy, setOrderBy] = useState<string>("date:desc");
+
   const [dateFilter, setDateFilter] = useState<{
     initialDate?: number;
     finalDate?: number;
@@ -31,21 +22,6 @@ const Page = () => {
   const { showMessage } = useAlertSnackbar();
 
   useEffect(() => {
-    getPageableOutcomes({
-      page,
-      size,
-      orderBy,
-      initialDate: dateFilter.initialDate,
-      finalDate: dateFilter.finalDate,
-    }).then((res) => {
-      if (res.status != 200) {
-        showMessage("Erro ao carregar gastos", "error");
-        return;
-      }
-      const data = res.data;
-      setOutcomes(data.content);
-      setTotalElements(data.totalElements);
-    });
     getOutcomesKpi({
       initialDate: dateFilter.initialDate,
       finalDate: dateFilter.finalDate,
@@ -57,22 +33,7 @@ const Page = () => {
       const data = res.data;
       setTotalValue(data.totalValue);
     });
-  }, [page, size, orderBy, dateFilter]);
-
-  function handlePageChange(page: number) {
-    setPage(page);
-  }
-
-  function handleRowsPerPageChange(rowsPerPage: number) {
-    setSize(rowsPerPage);
-  }
-
-  function handleOrderChange(
-    orderedField: keyof OutcomeResponseDTO,
-    order: Order
-  ) {
-    setOrderBy(`${orderedField}:${order}`);
-  }
+  }, [dateFilter, showMessage]);
 
   function handleDateRangeChange(initialDate?: number, finalDate?: number) {
     setDateFilter({ initialDate, finalDate });
@@ -94,7 +55,6 @@ const Page = () => {
       }
       showMessage("Gasto criado com sucesso", "success");
       setIsModalOpen(false);
-      // setPage(0);
     });
   }
 
@@ -118,14 +78,8 @@ const Page = () => {
           </Button>
         </Stack>
         <Paper elevation={8} className="p-4 m-4">
-          <OutcomeTable
-            data={outcomes}
-            totalElements={totalElements}
-            onPageChange={handlePageChange}
-            onRowsPerPageChange={handleRowsPerPageChange}
-            onOrderChange={handleOrderChange}
-            onDateRangeChange={handleDateRangeChange}
-          />
+          <OutcomeTableToolbar onFilterClick={handleDateRangeChange} />
+          <OutcomeTable dateFilter={dateFilter} />
         </Paper>
       </Container>
       <CreateOutcomeModal
