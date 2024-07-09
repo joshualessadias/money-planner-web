@@ -14,6 +14,7 @@ import { Order } from "@/types";
 import { Add } from "@mui/icons-material";
 import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
+import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 
 const Page = () => {
   const [outcomes, setOutcomes] = useState<OutcomeResponseDTO[]>([]);
@@ -27,6 +28,7 @@ const Page = () => {
     finalDate?: number;
   }>({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { showMessage } = useAlertSnackbar();
 
   useEffect(() => {
     getPageableOutcomes({
@@ -36,14 +38,24 @@ const Page = () => {
       initialDate: dateFilter.initialDate,
       finalDate: dateFilter.finalDate,
     }).then((res) => {
-      setOutcomes(res.content);
-      setTotalElements(res.totalElements);
+      if (res.status != 200) {
+        showMessage("Erro ao carregar gastos", "error");
+        return;
+      }
+      const data = res.data;
+      setOutcomes(data.content);
+      setTotalElements(data.totalElements);
     });
     getOutcomesKpi({
       initialDate: dateFilter.initialDate,
       finalDate: dateFilter.finalDate,
     }).then((res) => {
-      setTotalValue(res.totalValue);
+      if (res.status != 200) {
+        showMessage("Erro ao carregar KPIs", "error");
+        return;
+      }
+      const data = res.data;
+      setTotalValue(data.totalValue);
     });
   }, [page, size, orderBy, dateFilter]);
 
@@ -75,11 +87,14 @@ const Page = () => {
   }
 
   function handleCreateOutcomeSubmit(dto: OutcomeRequestDTO) {
-    console.log("creating outcome...");
-    createOutcome(dto).then((response) => {
-      console.log("outcome created", response);
+    createOutcome(dto).then((res) => {
+      if (res.status != 201) {
+        showMessage("Erro ao criar gasto", "error");
+        return;
+      }
+      showMessage("Gasto criado com sucesso", "success");
       setIsModalOpen(false);
-      setPage(0);
+      // setPage(0);
     });
   }
 

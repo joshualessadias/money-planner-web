@@ -1,10 +1,4 @@
 import { api } from "../api";
-import { AxiosResponse } from "axios";
-import {
-  OutcomeKpiResponseDTO,
-  OutcomeResponseDTO,
-  Page,
-} from "@/entities/money-planner-api";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 
 interface PageableFilterProps {
@@ -35,13 +29,9 @@ export async function getPageableOutcomes({
     finalDate: finalDate || null,
   };
 
-  const response: AxiosResponse<Page<OutcomeResponseDTO>> = await api.get(
-    "/outcome/pageable",
-    {
-      params,
-    }
-  );
-  return response.data;
+  return await api.get("/outcome/pageable", {
+    params,
+  });
 }
 
 export async function getOutcomesKpi({
@@ -53,19 +43,11 @@ export async function getOutcomesKpi({
     finalDate: finalDate || null,
   };
 
-  const response: AxiosResponse<OutcomeKpiResponseDTO> = await api.get(
-    "/outcome/kpi",
-    {
-      params,
-    }
-  );
-  return response.data;
+  return await api.get("/outcome/kpi", {
+    params,
+  });
 }
 
 export async function createOutcome(request: OutcomeRequestDTO) {
-  const response: AxiosResponse<OutcomeResponseDTO> = await api.post(
-    "/outcome",
-    request
-  );
-  return response.data;
+  return await api.post("/outcome", request);
 }

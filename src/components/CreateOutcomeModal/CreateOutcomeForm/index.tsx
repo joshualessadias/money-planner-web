@@ -1,5 +1,5 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import {
@@ -44,10 +44,6 @@ function CreateOutcomeForm({
     };
     onSubmit(dto);
   }
-
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
 
   return (
     <Box
