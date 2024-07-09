@@ -61,14 +61,14 @@ const useAuth = () => {
       setUser(response.data);
 
       if (pathname === "/login" || pathname === "/") {
-        router.push("/dashboard");
+        router.push("/outcome");
       }
     })();
   }, [isAuth, pathname, router]);
 
   const handleLogin = async (authRequest: AuthenticationRequestDTO) => {
     setLoading(true);
-    
+
     console.log("Removing Token");
     localStorage.removeItem("token");
 
@@ -84,7 +84,7 @@ const useAuth = () => {
       api.defaults.headers.Authorization = `Bearer ${accessToken}`;
       setIsAuth(true);
 
-      router.push("/dashboard");
+      router.push("/outcome");
 
       setLoading(false);
     } catch (err) {
