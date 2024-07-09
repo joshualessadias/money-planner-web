@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/auth/authContext";
 import { AlertSnackbarProvider } from "@/contexts/alertSnackbarContext";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "@/components/Theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AlertSnackbarProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </AlertSnackbarProvider>
+        <ThemeProvider theme={lightTheme}>
+          <AlertSnackbarProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </AlertSnackbarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
