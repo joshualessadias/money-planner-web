@@ -46,7 +46,7 @@ function CreateOutcomeForm({
   }
 
   return (
-    <Box sx={{ "& .MuiTextField-root": { mt: 2 } }}>
+    <Box sx={{ "& > *": { mt: 2 } }}>
       <TextField
         id="description"
         required
@@ -145,7 +145,7 @@ function CreateOutcomeForm({
         onChange={(e) => setInstallments(Number(e.target.value))}
       />
       <Button
-        className="mt-4 float-right"
+        className="float-right"
         variant="contained"
         onClick={handleSubmit}
       >
