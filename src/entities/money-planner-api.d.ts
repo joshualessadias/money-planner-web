@@ -1,195 +1,199 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2024-06-07 13:30:11.
+
+// Generated using typescript-generator version 3.2.1263 on 2024-07-11 16:36:01.
 
 export interface AppUserFilterRequestDTO extends BaseFilter {
-    name: string;
-    email: string;
+  name: string;
+  email: string;
 }
 
-export interface AuthenticationRequestDTO extends AppUserRequestValidationConstants {
-    email: string;
-    password: string;
+export interface AuthenticationRequestDTO
+  extends AppUserRequestValidationConstants {
+  email: string;
+  password: string;
 }
 
 export interface RegisterRequestDTO extends AppUserRequestValidationConstants {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
 
 export interface BankFilterRequestDTO extends BaseFilter {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 export interface BankRequestDTO {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 export interface OutcomeFilterRequestDTO extends BaseFilter {
-    categoryId: number;
-    paymentMethodId: number;
-    bankId: number;
-    initialDate: Date;
-    finalDate: Date;
-    initialValue: number;
-    finalValue: number;
-    description: string;
-    findAll: boolean;
+  categoryId: number;
+  paymentMethodId: number;
+  bankId: number;
+  initialDate: Date;
+  finalDate: Date;
+  initialValue: number;
+  finalValue: number;
+  description: string;
+  findAll: boolean;
+  hideInstallments: boolean;
 }
 
 export interface OutcomeRequestDTO {
-    description: string;
-    value: number;
-    date: number;
-    categoryId: number;
-    paymentMethodId: number;
-    bankId: number;
-    installments: number;
+  description: string;
+  value: number;
+  date: number;
+  categoryId: number;
+  paymentMethodId: number;
+  bankId: number;
+  installments: number;
 }
 
 export interface OutcomeCategoryFilterRequestDTO extends BaseFilter {
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 }
 
 export interface OutcomeCategoryRequestDTO {
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 }
 
 export interface PaymentMethodFilterRequestDTO extends BaseFilter {
-    name: string;
-    description: string;
-    code: string;
+  name: string;
+  description: string;
+  code: string;
 }
 
 export interface PaymentMethodRequestDTO {
-    name: string;
-    description: string;
-    code: string;
+  name: string;
+  description: string;
+  code: string;
 }
 
 export interface AppUserResponseDTO {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    roles: string[];
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  roles: string[];
 }
 
 export interface AuthenticationResponseDTO {
-    token: string;
+  token: string;
 }
 
 export interface BankResponseDTO {
-    id: number;
-    name: string;
-    code: string;
+  id: number;
+  name: string;
+  code: string;
 }
 
 export interface OutcomeCategoryResponseDTO {
-    id: number;
-    name: string;
-    description: string;
-}
-
-export interface OutcomeKpiResponseDTO {
-    totalValue: number;
+  id: number;
+  name: string;
+  description: string;
 }
 
 export interface OutcomeResponseDTO {
-    id: number;
-    description: string;
-    value: number;
-    date: number;
-    category: OutcomeCategoryResponseDTO;
-    paymentMethod: PaymentMethodResponseDTO;
-    bank: BankResponseDTO;
+  id: number;
+  description: string;
+  value: number;
+  date: number;
+  category: OutcomeCategoryResponseDTO;
+  paymentMethod: PaymentMethodResponseDTO;
+  bank: BankResponseDTO;
 }
 
 export interface PaymentMethodResponseDTO {
-    id: number;
-    name: string;
-    description: string;
-    code: string;
+  id: number;
+  name: string;
+  description: string;
+  code: string;
 }
 
 export interface RoleResponseDTO {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
+}
+
+export interface OutcomeKpiByCategoryResponseDTO {
+  value: number;
+  category: OutcomeCategoryResponseDTO;
+}
+
+export interface OutcomeKpiResponseDTO {
+  totalValue: number;
+  kpiByCategoryList: OutcomeKpiByCategoryResponseDTO[];
 }
 
 export interface Page<T> extends Slice<T> {
-    totalElements: number;
-    totalPages: number;
+  totalElements: number;
+  totalPages: number;
 }
 
 export interface BaseFilter {
-    page: number;
-    size: number;
-    orderBy: string;
+  page: number;
+  size: number;
+  orderBy: string;
 }
 
-export interface AppUserRequestValidationConstants {
-}
+export interface AppUserRequestValidationConstants {}
 
 export interface Sort extends Streamable<Order> {
-    unsorted: boolean;
-    sorted: boolean;
+  unsorted: boolean;
+  sorted: boolean;
 }
 
 export interface Pageable {
-    offset: number;
-    sort: Sort;
-    pageSize: number;
-    pageNumber: number;
-    paged: boolean;
-    unpaged: boolean;
+  offset: number;
+  sort: Sort;
+  pageSize: number;
+  pageNumber: number;
+  unpaged: boolean;
+  paged: boolean;
 }
 
 export interface Slice<T> extends Streamable<T> {
-    size: number;
-    content: T[];
-    number: number;
-    sort: Sort;
-    first: boolean;
-    last: boolean;
-    pageable: Pageable;
-    numberOfElements: number;
+  size: number;
+  content: T[];
+  number: number;
+  sort: Sort;
+  first: boolean;
+  numberOfElements: number;
+  pageable: Pageable;
+  last: boolean;
 }
 
 export interface Streamable<T> extends Iterable<T>, Supplier<Stream<T>> {
-    empty: boolean;
+  empty: boolean;
 }
 
 export interface Order {
-    direction: Direction;
-    property: string;
-    ignoreCase: boolean;
-    nullHandling: NullHandling;
-    descending: boolean;
-    ascending: boolean;
+  direction: Direction;
+  property: string;
+  ignoreCase: boolean;
+  nullHandling: NullHandling;
+  ascending: boolean;
+  descending: boolean;
 }
 
-export interface Iterable<T> {
-}
+export interface Iterable<T> {}
 
-export interface Supplier<T> {
-}
+export interface Supplier<T> {}
 
-export interface Stream<T> extends BaseStream<T, Stream<T>> {
-}
+export interface Stream<T> extends BaseStream<T, Stream<T>> {}
 
 export interface BaseStream<T, S> extends AutoCloseable {
-    parallel: boolean;
+  parallel: boolean;
 }
 
-export interface AutoCloseable {
-}
+export interface AutoCloseable {}
 
 export type Direction = "ASC" | "DESC";
 
