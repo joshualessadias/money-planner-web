@@ -32,12 +32,16 @@ const useAuth = () => {
       return response;
     },
     async (error) => {
-      console.log("error", error);
-      console.log("Removing Token");
-      localStorage.removeItem("token");
-      api.defaults.headers.Authorization = "";
-      setIsAuth(false);
-      return Promise.reject(error);
+      if (error.response.status === 403) {
+        console.log("error", error);
+        console.log("Removing Token");
+        localStorage.removeItem("token");
+        api.defaults.headers.Authorization = "";
+        setIsAuth(false);
+        router.push("/login");
+        return Promise.reject(error);
+      }
+      return error.response;
     }
   );
 
