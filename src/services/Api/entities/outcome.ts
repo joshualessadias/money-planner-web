@@ -5,6 +5,7 @@ export interface PageableFilterProps {
   page: number;
   size: number;
   orderBy: string;
+  hideInstallments?: boolean;
   initialDate?: number;
   finalDate?: number;
   categoryId?: number;
@@ -26,6 +27,7 @@ export async function getPageableOutcomes({
   categoryId,
   bankId,
   paymentMethodId,
+  hideInstallments,
 }: PageableFilterProps) {
   const params = {
     page: page + 1,
@@ -36,6 +38,7 @@ export async function getPageableOutcomes({
     categoryId: categoryId || null,
     bankId: bankId || null,
     paymentMethodId: paymentMethodId || null,
+    hideInstallments: hideInstallments || null,
   };
 
   return await api.get("/outcome/pageable", {

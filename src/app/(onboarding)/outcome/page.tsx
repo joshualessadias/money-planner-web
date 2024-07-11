@@ -23,6 +23,7 @@ const Page = () => {
   const [totalValue, setTotalValue] = useState<number>(0);
   const [updateOutcomes, setUpdateOutcomes] = useState<boolean>(false);
   const [filter, setFilter] = useState<{
+    hideInstallments?: boolean;
     initialDate?: number;
     finalDate?: number;
     outcomeCategoryId?: number;
@@ -66,6 +67,7 @@ const Page = () => {
   }, []);
 
   function handleDateRangeChange(
+    hideInstallments: boolean,
     initialDate?: number,
     finalDate?: number,
     outcomeCategoryId?: number,
@@ -73,6 +75,7 @@ const Page = () => {
     bankId?: number
   ) {
     setFilter({
+      hideInstallments,
       initialDate,
       finalDate,
       outcomeCategoryId,

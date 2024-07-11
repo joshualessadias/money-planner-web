@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, MenuItem, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  MenuItem,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
@@ -14,6 +21,7 @@ import {
 
 interface OutcomeTableToolbarProps {
   onFilterClick: (
+    hideInstallments: boolean,
     initialDate?: number,
     finalDate?: number,
     outcomeCategoryId?: number,
@@ -38,6 +46,7 @@ function OutcomeTableToolbar({
   const [outcomeCategoryId, setOutcomeCategoryId] = useState<number>();
   const [paymentMethodId, setPaymentMethodId] = useState<number>();
   const [bankId, setBankId] = useState<number>();
+  const [hideInstallments, setHideInstallments] = useState<boolean>(false);
 
   function handleClearFiltersClick() {
     setInitialValue(getFirstDayOfMonth());
@@ -45,15 +54,18 @@ function OutcomeTableToolbar({
     setOutcomeCategoryId(undefined);
     setPaymentMethodId(undefined);
     setBankId(undefined);
+    setHideInstallments(false);
     const initialDate = initialValue ? initialValue.valueOf() : 0;
     const finalDate = finalValue ? finalValue.valueOf() : 0;
-    onFilterClick(initialDate, finalDate);
+    const hideInstallments = false;
+    onFilterClick(hideInstallments, initialDate, finalDate);
   }
 
   function handleOnFilterClick() {
     const initialDate = initialValue ? initialValue.valueOf() : 0;
     const finalDate = finalValue ? finalValue.valueOf() : 0;
     onFilterClick(
+      hideInstallments,
       initialDate,
       finalDate,
       outcomeCategoryId,
@@ -146,6 +158,16 @@ function OutcomeTableToolbar({
           </MenuItem>
         ))}
       </TextField>
+      <FormControlLabel
+        sx={{ fontSize: "small" }}
+        label="Esconder parcelas"
+        control={
+          <Checkbox
+            checked={hideInstallments}
+            onChange={(e) => setHideInstallments(e.target.checked)}
+          />
+        }
+      />
       <div className="flex gap-2">
         <Button
           className="text-nowrap self-end"

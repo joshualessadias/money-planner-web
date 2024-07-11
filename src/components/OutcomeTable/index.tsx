@@ -17,6 +17,7 @@ import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 
 interface OutcomeTableProps {
   filter: {
+    hideInstallments?: boolean;
     initialDate?: number;
     finalDate?: number;
     outcomeCategoryId?: number;
@@ -48,6 +49,7 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
       categoryId: filter.outcomeCategoryId,
       paymentMethodId: filter.paymentMethodId,
       bankId: filter.bankId,
+      hideInstallments: filter.hideInstallments,
     }).then((res) => {
       if (res.status != 200) {
         showMessage("Erro ao carregar gastos", "error");
