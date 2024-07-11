@@ -54,7 +54,7 @@ function CreateOutcomeModal({
     >
       <Box sx={style}>
         <Stack justifyContent="space-between" direction="row">
-          <Typography variant="h4">Criar um Gasto</Typography>
+          <Typography variant="h5">Criar um Gasto</Typography>
           <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>

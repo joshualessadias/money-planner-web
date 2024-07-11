@@ -46,7 +46,7 @@ function CreateOutcomeForm({
   }
 
   return (
-    <Box sx={{ "& > *": { mt: 2 } }}>
+    <Box className="flex flex-col gap-4 pt-2">
       <TextField
         id="description"
         required
@@ -72,7 +72,6 @@ function CreateOutcomeForm({
         adapterLocale="pt-br"
       >
         <DatePicker
-          sx={{ mt: 2 }}
           label="Data da compra"
           slotProps={{
             textField: {
