@@ -1,12 +1,15 @@
 import { api } from "../api";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 
-interface PageableFilterProps {
+export interface PageableFilterProps {
   page: number;
   size: number;
   orderBy: string;
   initialDate?: number;
   finalDate?: number;
+  categoryId?: number;
+  paymentMethodId?: number;
+  bankId?: number;
 }
 
 interface GetOutcomesKpiProps {
@@ -20,6 +23,9 @@ export async function getPageableOutcomes({
   orderBy,
   initialDate,
   finalDate,
+  categoryId,
+  bankId,
+  paymentMethodId,
 }: PageableFilterProps) {
   const params = {
     page: page + 1,
@@ -27,6 +33,9 @@ export async function getPageableOutcomes({
     orderBy,
     initialDate: initialDate || null,
     finalDate: finalDate || null,
+    categoryId: categoryId || null,
+    bankId: bankId || null,
+    paymentMethodId: paymentMethodId || null,
   };
 
   return await api.get("/outcome/pageable", {

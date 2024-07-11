@@ -22,9 +22,12 @@ import {
 const Page = () => {
   const [totalValue, setTotalValue] = useState<number>(0);
   const [updateOutcomes, setUpdateOutcomes] = useState<boolean>(false);
-  const [dateFilter, setDateFilter] = useState<{
+  const [filter, setFilter] = useState<{
     initialDate?: number;
     finalDate?: number;
+    outcomeCategoryId?: number;
+    paymentMethodId?: number;
+    bankId?: number;
   }>({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { showMessage } = useAlertSnackbar();
@@ -38,8 +41,8 @@ const Page = () => {
 
   useEffect(() => {
     getOutcomesKpi({
-      initialDate: dateFilter.initialDate,
-      finalDate: dateFilter.finalDate,
+      initialDate: filter.initialDate,
+      finalDate: filter.finalDate,
     }).then((res) => {
       if (res.status != 200) {
         showMessage("Erro ao carregar KPIs", "error");
@@ -48,7 +51,7 @@ const Page = () => {
       const data = res.data;
       setTotalValue(data.totalValue);
     });
-  }, [dateFilter, updateOutcomes, showMessage]);
+  }, [filter.initialDate, filter.finalDate, updateOutcomes, showMessage]);
 
   useEffect(() => {
     getOutcomeCategoryList().then((res) => {
@@ -62,8 +65,20 @@ const Page = () => {
     });
   }, []);
 
-  function handleDateRangeChange(initialDate?: number, finalDate?: number) {
-    setDateFilter({ initialDate, finalDate });
+  function handleDateRangeChange(
+    initialDate?: number,
+    finalDate?: number,
+    outcomeCategoryId?: number,
+    paymentMethodId?: number,
+    bankId?: number
+  ) {
+    setFilter({
+      initialDate,
+      finalDate,
+      outcomeCategoryId,
+      paymentMethodId,
+      bankId,
+    });
   }
 
   function handleOnCreateOutcomeClick() {
@@ -112,10 +127,7 @@ const Page = () => {
             paymentMethodList={paymentMethodList}
             bankList={bankList}
           />
-          <OutcomeTable
-            dateFilter={dateFilter}
-            updateOutcomes={updateOutcomes}
-          />
+          <OutcomeTable filter={filter} updateOutcomes={updateOutcomes} />
         </Paper>
       </Container>
       <CreateOutcomeModal

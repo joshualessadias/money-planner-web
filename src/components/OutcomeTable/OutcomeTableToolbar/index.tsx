@@ -13,7 +13,13 @@ import {
 } from "@/entities/money-planner-api";
 
 interface OutcomeTableToolbarProps {
-  onFilterClick: (initialDate?: number, finalDate?: number) => void;
+  onFilterClick: (
+    initialDate?: number,
+    finalDate?: number,
+    outcomeCategoryId?: number,
+    paymentMethodId?: number,
+    bankId?: number
+  ) => void;
   outcomeCategoryList: OutcomeCategoryResponseDTO[];
   paymentMethodList: PaymentMethodResponseDTO[];
   bankList: BankResponseDTO[];
@@ -47,7 +53,13 @@ function OutcomeTableToolbar({
   function handleOnFilterClick() {
     const initialDate = initialValue ? initialValue.valueOf() : 0;
     const finalDate = finalValue ? finalValue.valueOf() : 0;
-    onFilterClick(initialDate, finalDate);
+    onFilterClick(
+      initialDate,
+      finalDate,
+      outcomeCategoryId,
+      paymentMethodId,
+      bankId
+    );
   }
 
   return (

@@ -16,11 +16,17 @@ import { getPageableOutcomes } from "@/services/Api/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 
 interface OutcomeTableProps {
-  dateFilter: { initialDate?: number; finalDate?: number };
+  filter: {
+    initialDate?: number;
+    finalDate?: number;
+    outcomeCategoryId?: number;
+    paymentMethodId?: number;
+    bankId?: number;
+  };
   updateOutcomes: boolean;
 }
 
-function OutcomeTable({ dateFilter, updateOutcomes }: OutcomeTableProps) {
+function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
   const [orderedField, setOrderedField] =
     useState<keyof OutcomeResponseDTO>("date");
   const [order, setOrder] = useState<Order>("desc");
@@ -37,8 +43,11 @@ function OutcomeTable({ dateFilter, updateOutcomes }: OutcomeTableProps) {
       page,
       size,
       orderBy,
-      initialDate: dateFilter.initialDate,
-      finalDate: dateFilter.finalDate,
+      initialDate: filter.initialDate,
+      finalDate: filter.finalDate,
+      categoryId: filter.outcomeCategoryId,
+      paymentMethodId: filter.paymentMethodId,
+      bankId: filter.bankId,
     }).then((res) => {
       if (res.status != 200) {
         showMessage("Erro ao carregar gastos", "error");
@@ -48,15 +57,7 @@ function OutcomeTable({ dateFilter, updateOutcomes }: OutcomeTableProps) {
       setOutcomes(data.content);
       setTotalElements(data.totalElements);
     });
-  }, [
-    dateFilter.finalDate,
-    dateFilter.initialDate,
-    orderBy,
-    page,
-    size,
-    updateOutcomes,
-    showMessage,
-  ]);
+  }, [filter, orderBy, page, size, updateOutcomes, showMessage]);
 
   function handlePageChange(_e: any, page: number) {
     setPage(page);
