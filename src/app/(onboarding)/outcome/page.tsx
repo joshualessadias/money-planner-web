@@ -10,6 +10,14 @@ import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 import OutcomeTableToolbar from "@/components/OutcomeTable/OutcomeTableToolbar";
+import { getOutcomeCategoryList } from "@/services/Api/entities/outcomeCategory";
+import { getPaymentMethodList } from "@/services/Api/entities/paymentMethod";
+import { getBankList } from "@/services/Api/entities/bank";
+import {
+  BankResponseDTO,
+  OutcomeCategoryResponseDTO,
+  PaymentMethodResponseDTO,
+} from "@/entities/money-planner-api";
 
 const Page = () => {
   const [totalValue, setTotalValue] = useState<number>(0);
@@ -20,6 +28,13 @@ const Page = () => {
   }>({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { showMessage } = useAlertSnackbar();
+  const [outcomeCategoryList, setOutcomeCategoryList] = useState<
+    OutcomeCategoryResponseDTO[]
+  >([]);
+  const [paymentMethodList, setPaymentMethodList] = useState<
+    PaymentMethodResponseDTO[]
+  >([]);
+  const [bankList, setBankList] = useState<BankResponseDTO[]>([]);
 
   useEffect(() => {
     getOutcomesKpi({
@@ -34,6 +49,18 @@ const Page = () => {
       setTotalValue(data.totalValue);
     });
   }, [dateFilter, updateOutcomes, showMessage]);
+
+  useEffect(() => {
+    getOutcomeCategoryList().then((res) => {
+      setOutcomeCategoryList(res);
+    });
+    getPaymentMethodList().then((res) => {
+      setPaymentMethodList(res);
+    });
+    getBankList().then((res) => {
+      setBankList(res);
+    });
+  }, []);
 
   function handleDateRangeChange(initialDate?: number, finalDate?: number) {
     setDateFilter({ initialDate, finalDate });
@@ -79,7 +106,12 @@ const Page = () => {
           </Button>
         </Stack>
         <Paper elevation={8} className="p-4 m-4">
-          <OutcomeTableToolbar onFilterClick={handleDateRangeChange} />
+          <OutcomeTableToolbar
+            onFilterClick={handleDateRangeChange}
+            outcomeCategoryList={outcomeCategoryList}
+            paymentMethodList={paymentMethodList}
+            bankList={bankList}
+          />
           <OutcomeTable
             dateFilter={dateFilter}
             updateOutcomes={updateOutcomes}
@@ -90,6 +122,9 @@ const Page = () => {
         open={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleCreateOutcomeSubmit}
+        outcomeCategoryList={outcomeCategoryList}
+        paymentMethodList={paymentMethodList}
+        bankList={bankList}
       />
     </div>
   );

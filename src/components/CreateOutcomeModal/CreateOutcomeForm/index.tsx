@@ -72,6 +72,7 @@ function CreateOutcomeForm({
         adapterLocale="pt-br"
       >
         <DatePicker
+          sx={{ mt: 2 }}
           label="Data da compra"
           slotProps={{
             textField: {
