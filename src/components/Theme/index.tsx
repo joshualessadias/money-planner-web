@@ -1,7 +1,7 @@
 "use client";
 
 import { createTheme } from "@mui/material";
-import { lime, teal } from "@mui/material/colors";
+import { lime, teal, red } from "@mui/material/colors";
 
 export const lightTheme = createTheme({
   palette: {
@@ -19,6 +19,9 @@ export const lightTheme = createTheme({
       default: teal[500],
       paper: "#ffffff",
       // dark: "#1d1e18"
+    },
+    warning: {
+      main: red[400],
     },
   },
   components: {

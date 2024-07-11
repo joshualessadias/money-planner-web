@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -14,6 +15,8 @@ import OutcomeTableHead from "@/components/OutcomeTable/OutcomeTableHead";
 import { Order } from "@/types";
 import { getPageableOutcomes } from "@/services/Api/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface OutcomeTableProps {
   filter: {
@@ -101,6 +104,16 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
                 </TableCell>
                 <TableCell>{outcome.paymentMethod.name}</TableCell>
                 <TableCell>{outcome.bank.name}</TableCell>
+                <TableCell padding="none" align="right">
+                  <IconButton>
+                    <ModeEditIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell padding="none" align="right">
+                  <IconButton>
+                    <DeleteIcon color="warning" />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
