@@ -19,6 +19,7 @@ import {
   OutcomeKpiResponseDTO,
   PaymentMethodResponseDTO,
 } from "@/entities/money-planner-api";
+import { getFirstDayOfMonth, getLastDayOfMonth } from "@/helpers/datePicker";
 
 const Page = () => {
   const [insights, setInsights] = useState<OutcomeKpiResponseDTO>({
@@ -33,7 +34,10 @@ const Page = () => {
     outcomeCategoryId?: number;
     paymentMethodId?: number;
     bankId?: number;
-  }>({});
+  }>({
+    initialDate: getFirstDayOfMonth().valueOf(),
+    finalDate: getLastDayOfMonth().valueOf(),
+  });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { showMessage } = useAlertSnackbar();
   const [outcomeCategoryList, setOutcomeCategoryList] = useState<
