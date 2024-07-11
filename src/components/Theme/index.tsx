@@ -24,7 +24,7 @@ export const lightTheme = createTheme({
   components: {
     MuiCard: {
       defaultProps: {
-        elevation: 8,
+        elevation: 4,
       },
     },
     MuiPaper: {
