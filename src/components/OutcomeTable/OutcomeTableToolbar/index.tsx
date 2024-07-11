@@ -55,8 +55,8 @@ function OutcomeTableToolbar({
     setPaymentMethodId(undefined);
     setBankId(undefined);
     setHideInstallments(false);
-    const initialDate = initialValue ? initialValue.valueOf() : 0;
-    const finalDate = finalValue ? finalValue.valueOf() : 0;
+    const initialDate = initialValue ? getFirstDayOfMonth().valueOf() : 0;
+    const finalDate = finalValue ? getLastDayOfMonth().valueOf() : 0;
     const hideInstallments = false;
     onFilterClick(hideInstallments, initialDate, finalDate);
   }
