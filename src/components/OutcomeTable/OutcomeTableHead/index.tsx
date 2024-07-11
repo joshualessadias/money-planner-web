@@ -31,18 +31,18 @@ const headCells: readonly HeadCell[] = [
     id: "description",
     numeric: false,
     disablePadding: true,
-    label: "Description",
+    label: "Descrição",
   },
-  { id: "value", numeric: true, disablePadding: false, label: "Value" },
-  { id: "date", numeric: false, disablePadding: false, label: "Date" },
-  { id: "category", numeric: false, disablePadding: false, label: "Category" },
+  { id: "value", numeric: true, disablePadding: false, label: "Valor" },
+  { id: "date", numeric: false, disablePadding: false, label: "Data" },
+  { id: "category", numeric: false, disablePadding: false, label: "Categoria" },
   {
     id: "paymentMethod",
     numeric: false,
     disablePadding: false,
-    label: "Payment Method",
+    label: "Método de Pagamento",
   },
-  { id: "bank", numeric: false, disablePadding: false, label: "Bank" },
+  { id: "bank", numeric: false, disablePadding: false, label: "Banco" },
 ];
 
 function OutcomeTableHead({
