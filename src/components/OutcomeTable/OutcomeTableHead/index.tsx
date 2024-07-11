@@ -61,6 +61,7 @@ function OutcomeTableHead({
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
+            className="border-0 p-4 font-bold"
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}

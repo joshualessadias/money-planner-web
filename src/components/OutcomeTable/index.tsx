@@ -90,7 +90,7 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
           />
           <TableBody>
             {outcomes.map((outcome) => (
-              <TableRow key={outcome.id}>
+              <TableRow className="border-t" key={outcome.id}>
                 <TableCell scope="row">{outcome.description}</TableCell>
                 <TableCell align="right">
                   {formatCurrency(outcome.value)}
