@@ -82,7 +82,7 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
   return (
     <>
       <TableContainer>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }}>
           <OutcomeTableHead
             onRequestSort={handleRequestSort}
             order={order}
@@ -90,10 +90,7 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
           />
           <TableBody>
             {outcomes.map((outcome) => (
-              <TableRow
-                key={outcome.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+              <TableRow key={outcome.id}>
                 <TableCell scope="row">{outcome.description}</TableCell>
                 <TableCell align="right">
                   {formatCurrency(outcome.value)}
@@ -110,7 +107,7 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
         </Table>
       </TableContainer>
       <TablePagination
-        className="pt-2"
+        className="pt-2 border-0"
         style={{ display: "flex", justifyContent: "center" }}
         color={"primary"}
         page={page}
