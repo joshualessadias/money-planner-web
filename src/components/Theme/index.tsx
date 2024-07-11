@@ -21,4 +21,16 @@ export const lightTheme = createTheme({
       // dark: "#1d1e18"
     },
   },
+  components: {
+    MuiCard: {
+      defaultProps: {
+        elevation: 8,
+      },
+    },
+    MuiPaper: {
+      defaultProps: {
+        elevation: 8,
+      },
+    },
+  },
 });

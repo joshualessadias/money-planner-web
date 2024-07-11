@@ -120,7 +120,7 @@ const Page = () => {
             Criar Gasto
           </Button>
         </Stack>
-        <Paper elevation={8} className="p-4 m-4">
+        <Paper className="p-4 m-4">
           <OutcomeTableToolbar
             onFilterClick={handleDateRangeChange}
             outcomeCategoryList={outcomeCategoryList}
