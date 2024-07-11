@@ -1,5 +1,7 @@
 import { api } from "../api";
 import { OutcomeRequestDTO } from "@/entities/outcome";
+import { AxiosResponse } from "axios";
+import { OutcomeKpiResponseDTO } from "@/entities/money-planner-api";
 
 export interface PageableFilterProps {
   page: number;
@@ -49,7 +51,7 @@ export async function getPageableOutcomes({
 export async function getOutcomesKpi({
   initialDate,
   finalDate,
-}: GetOutcomesKpiProps) {
+}: GetOutcomesKpiProps): Promise<AxiosResponse<OutcomeKpiResponseDTO>> {
   const params = {
     initialDate: initialDate || null,
     finalDate: finalDate || null,

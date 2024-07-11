@@ -16,11 +16,15 @@ import { getBankList } from "@/services/Api/entities/bank";
 import {
   BankResponseDTO,
   OutcomeCategoryResponseDTO,
+  OutcomeKpiResponseDTO,
   PaymentMethodResponseDTO,
 } from "@/entities/money-planner-api";
 
 const Page = () => {
-  const [totalValue, setTotalValue] = useState<number>(0);
+  const [insights, setInsights] = useState<OutcomeKpiResponseDTO>({
+    kpiByCategoryList: [],
+    totalValue: 0,
+  });
   const [updateOutcomes, setUpdateOutcomes] = useState<boolean>(false);
   const [filter, setFilter] = useState<{
     hideInstallments?: boolean;
@@ -49,8 +53,7 @@ const Page = () => {
         showMessage("Erro ao carregar KPIs", "error");
         return;
       }
-      const data = res.data;
-      setTotalValue(data.totalValue);
+      setInsights(res.data);
     });
   }, [filter.initialDate, filter.finalDate, updateOutcomes, showMessage]);
 
@@ -113,9 +116,9 @@ const Page = () => {
           spacing={{ xs: 1, sm: 2 }}
           justifyContent="space-between"
         >
-          <OutcomeInsights total={totalValue} />
+          <OutcomeInsights insights={insights} />
           <Button
-            className="h-9 self-end"
+            className="h-9 self-end text-nowrap w-48"
             variant="contained"
             startIcon={<Add />}
             onClick={handleOnCreateOutcomeClick}

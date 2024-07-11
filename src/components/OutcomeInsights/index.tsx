@@ -1,14 +1,22 @@
 import React from "react";
 import KpiCard from "@/components/OutcomeInsights/KpiCard";
+import { OutcomeKpiResponseDTO } from "@/entities/money-planner-api";
 
 interface OutcomeInsightsProps {
-  total: number;
+  insights: OutcomeKpiResponseDTO;
 }
 
-const OutcomeInsights = ({ total }: OutcomeInsightsProps) => {
+const OutcomeInsights = ({ insights }: OutcomeInsightsProps) => {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
-      <KpiCard text="Gasto Total" value={total} />
+      <KpiCard text="Gasto Total" value={insights.totalValue} />
+      {insights.kpiByCategoryList.slice(0, 3).map((kpi) => (
+        <KpiCard
+          key={kpi.category.id}
+          text={kpi.category.name}
+          value={kpi.value}
+        />
+      ))}
     </div>
   );
 };
