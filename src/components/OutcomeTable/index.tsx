@@ -58,29 +58,9 @@ function OutcomeTable({
   const [outcomes, setOutcomes] = useState<OutcomeResponseDTO[]>([]);
   const [totalElements, setTotalElements] = useState<number>(0);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  const [outcomeToEdit, setOutcomeToEdit] = useState<OutcomeResponseDTO>({
-    bank: {
-      id: 0,
-      name: "",
-      code: "",
-    },
-    category: {
-      id: 0,
-      name: "",
-      description: "",
-    },
-    childrenInstallmentsAmount: 0,
-    date: 0,
-    description: "",
-    id: 0,
-    paymentMethod: {
-      id: 0,
-      name: "",
-      description: "",
-      code: "",
-    },
-    value: 0,
-  });
+  const [outcomeToEdit, setOutcomeToEdit] = useState<OutcomeResponseDTO | null>(
+    null
+  );
 
   const { showMessage } = useAlertSnackbar();
 
@@ -125,7 +105,7 @@ function OutcomeTable({
   }
 
   function handleOnModeEditIconClick(outcome: OutcomeResponseDTO) {
-    setOutcomeToEdit(outcome);
+    setOutcomeToEdit(outcome.installmentParent || outcome);
     setIsEditModalOpen(true);
   }
 
@@ -134,7 +114,7 @@ function OutcomeTable({
   }
 
   function handleEditOutcomeSubmit(id: number, dto: OutcomeRequestDTO) {
-    onEditOutcomeSubmit(outcomeToEdit.id, dto);
+    onEditOutcomeSubmit(id, dto);
     setIsEditModalOpen(false);
   }
 
@@ -187,15 +167,17 @@ function OutcomeTable({
         onPageChange={handlePageChange}
         count={totalElements}
       ></TablePagination>
-      <EditOutcomeModal
-        open={isEditModalOpen}
-        onClose={handleCloseModal}
-        onSubmit={handleEditOutcomeSubmit}
-        outcomeCategoryList={outcomeCategoryList}
-        paymentMethodList={paymentMethodList}
-        bankList={bankList}
-        initialOutcome={outcomeToEdit}
-      />
+      {outcomeToEdit && (
+        <EditOutcomeModal
+          open={isEditModalOpen}
+          onClose={handleCloseModal}
+          onSubmit={handleEditOutcomeSubmit}
+          outcomeCategoryList={outcomeCategoryList}
+          paymentMethodList={paymentMethodList}
+          bankList={bankList}
+          initialOutcome={outcomeToEdit}
+        />
+      )}
     </>
   );
 }
