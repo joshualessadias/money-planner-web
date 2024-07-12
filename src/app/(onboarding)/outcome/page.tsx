@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { createOutcome, getOutcomesKpi } from "@/services/Api/entities/outcome";
+import {
+  createOutcome,
+  getOutcomesKpi,
+  updateOutcome,
+} from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
 import { Button, Container, Paper, Stack } from "@mui/material";
@@ -111,6 +115,17 @@ const Page = () => {
     });
   }
 
+  function handleEditOutcomeSubmit(id: number, dto: OutcomeRequestDTO) {
+    updateOutcome(id, dto).then((res) => {
+      if (res.status != 202) {
+        showMessage("Erro ao atualizar gasto", "error");
+      } else {
+        showMessage("Gasto atualizado com sucesso", "success");
+        setUpdateOutcomes(!updateOutcomes);
+      }
+    });
+  }
+
   return (
     <div>
       <Container maxWidth="lg">
@@ -137,7 +152,14 @@ const Page = () => {
             paymentMethodList={paymentMethodList}
             bankList={bankList}
           />
-          <OutcomeTable filter={filter} updateOutcomes={updateOutcomes} />
+          <OutcomeTable
+            filter={filter}
+            updateOutcomes={updateOutcomes}
+            bankList={bankList}
+            outcomeCategoryList={outcomeCategoryList}
+            paymentMethodList={paymentMethodList}
+            onEditOutcomeSubmit={handleEditOutcomeSubmit}
+          />
         </Paper>
       </Container>
       <CreateOutcomeModal

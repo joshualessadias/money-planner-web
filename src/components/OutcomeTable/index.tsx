@@ -8,7 +8,12 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { OutcomeResponseDTO } from "@/entities/money-planner-api";
+import {
+  BankResponseDTO,
+  OutcomeCategoryResponseDTO,
+  OutcomeResponseDTO,
+  PaymentMethodResponseDTO,
+} from "@/entities/money-planner-api";
 import formatCurrency from "@/helpers/currencyMask";
 import formatDate from "@/helpers/dateMask";
 import OutcomeTableHead from "@/components/OutcomeTable/OutcomeTableHead";
@@ -17,6 +22,8 @@ import { getPageableOutcomes } from "@/services/Api/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditOutcomeModal from "@/components/EditOutcomeModal";
+import { OutcomeRequestDTO } from "@/entities/outcome";
 
 interface OutcomeTableProps {
   filter: {
@@ -28,9 +35,20 @@ interface OutcomeTableProps {
     bankId?: number;
   };
   updateOutcomes: boolean;
+  bankList: BankResponseDTO[];
+  outcomeCategoryList: OutcomeCategoryResponseDTO[];
+  paymentMethodList: PaymentMethodResponseDTO[];
+  onEditOutcomeSubmit: (id: number, dto: OutcomeRequestDTO) => void;
 }
 
-function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
+function OutcomeTable({
+  filter,
+  updateOutcomes,
+  bankList,
+  outcomeCategoryList,
+  paymentMethodList,
+  onEditOutcomeSubmit,
+}: OutcomeTableProps) {
   const [orderedField, setOrderedField] =
     useState<keyof OutcomeResponseDTO>("date");
   const [order, setOrder] = useState<Order>("desc");
@@ -39,6 +57,30 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
   const [orderBy, setOrderBy] = useState<string>("date:desc");
   const [outcomes, setOutcomes] = useState<OutcomeResponseDTO[]>([]);
   const [totalElements, setTotalElements] = useState<number>(0);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [outcomeToEdit, setOutcomeToEdit] = useState<OutcomeResponseDTO>({
+    bank: {
+      id: 0,
+      name: "",
+      code: "",
+    },
+    category: {
+      id: 0,
+      name: "",
+      description: "",
+    },
+    childrenInstallmentsAmount: 0,
+    date: 0,
+    description: "",
+    id: 0,
+    paymentMethod: {
+      id: 0,
+      name: "",
+      description: "",
+      code: "",
+    },
+    value: 0,
+  });
 
   const { showMessage } = useAlertSnackbar();
 
@@ -82,6 +124,20 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
     setOrderedField(property);
   }
 
+  function handleOnModeEditIconClick(outcome: OutcomeResponseDTO) {
+    setOutcomeToEdit(outcome);
+    setIsEditModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsEditModalOpen(false);
+  }
+
+  function handleEditOutcomeSubmit(id: number, dto: OutcomeRequestDTO) {
+    onEditOutcomeSubmit(outcomeToEdit.id, dto);
+    setIsEditModalOpen(false);
+  }
+
   return (
     <>
       <TableContainer>
@@ -106,7 +162,9 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
                 <TableCell>{outcome.bank.name}</TableCell>
                 <TableCell padding="none" align="right">
                   <IconButton>
-                    <ModeEditIcon />
+                    <ModeEditIcon
+                      onClick={() => handleOnModeEditIconClick(outcome)}
+                    />
                   </IconButton>
                 </TableCell>
                 <TableCell padding="none" align="right">
@@ -129,6 +187,15 @@ function OutcomeTable({ filter, updateOutcomes }: OutcomeTableProps) {
         onPageChange={handlePageChange}
         count={totalElements}
       ></TablePagination>
+      <EditOutcomeModal
+        open={isEditModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleEditOutcomeSubmit}
+        outcomeCategoryList={outcomeCategoryList}
+        paymentMethodList={paymentMethodList}
+        bankList={bankList}
+        initialOutcome={outcomeToEdit}
+      />
     </>
   );
 }

@@ -65,3 +65,7 @@ export async function getOutcomesKpi({
 export async function createOutcome(request: OutcomeRequestDTO) {
   return await api.post("/outcome", request);
 }
+
+export async function updateOutcome(id: number, request: OutcomeRequestDTO) {
+  return await api.put("/outcome/" + id, request);
+}
