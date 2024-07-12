@@ -69,3 +69,7 @@ export async function createOutcome(request: OutcomeRequestDTO) {
 export async function updateOutcome(id: number, request: OutcomeRequestDTO) {
   return await api.put("/outcome/" + id, request);
 }
+
+export async function deleteOutcome(id: number) {
+  return await api.delete("/outcome/" + id);
+}

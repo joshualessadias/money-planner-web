@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import {
   createOutcome,
+  deleteOutcome,
   getOutcomesKpi,
   updateOutcome,
 } from "@/services/Api/entities/outcome";
@@ -126,6 +127,17 @@ const Page = () => {
     });
   }
 
+  function handleDeleteOutcomeSubmit(id: number) {
+    deleteOutcome(id).then((res) => {
+      if (res.status != 204) {
+        showMessage("Erro ao deletar gasto", "error");
+      } else {
+        showMessage("Gasto deletado com sucesso", "success");
+        setUpdateOutcomes(!updateOutcomes);
+      }
+    });
+  }
+
   return (
     <div>
       <Container maxWidth="lg">
@@ -159,6 +171,7 @@ const Page = () => {
             outcomeCategoryList={outcomeCategoryList}
             paymentMethodList={paymentMethodList}
             onEditOutcomeSubmit={handleEditOutcomeSubmit}
+            onDeleteOutcomeSubmit={handleDeleteOutcomeSubmit}
           />
         </Paper>
       </Container>

@@ -24,6 +24,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditOutcomeModal from "@/components/EditOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
+import DeleteOutcomeModal from "@/components/DeleteOutcomeModal";
 
 interface OutcomeTableProps {
   filter: {
@@ -39,6 +40,7 @@ interface OutcomeTableProps {
   outcomeCategoryList: OutcomeCategoryResponseDTO[];
   paymentMethodList: PaymentMethodResponseDTO[];
   onEditOutcomeSubmit: (id: number, dto: OutcomeRequestDTO) => void;
+  onDeleteOutcomeSubmit: (id: number) => void;
 }
 
 function OutcomeTable({
@@ -48,6 +50,7 @@ function OutcomeTable({
   outcomeCategoryList,
   paymentMethodList,
   onEditOutcomeSubmit,
+  onDeleteOutcomeSubmit,
 }: OutcomeTableProps) {
   const [orderedField, setOrderedField] =
     useState<keyof OutcomeResponseDTO>("date");
@@ -61,6 +64,9 @@ function OutcomeTable({
   const [outcomeToEdit, setOutcomeToEdit] = useState<OutcomeResponseDTO | null>(
     null
   );
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [outcomeToDelete, setOutcomeToDelete] =
+    useState<OutcomeResponseDTO | null>(null);
 
   const { showMessage } = useAlertSnackbar();
 
@@ -109,13 +115,27 @@ function OutcomeTable({
     setIsEditModalOpen(true);
   }
 
-  function handleCloseModal() {
+  function handleOnDeleteIconClick(outcome: OutcomeResponseDTO) {
+    setOutcomeToDelete(outcome.installmentParent || outcome);
+    setIsDeleteModalOpen(true);
+  }
+
+  function handleCloseEditModal() {
     setIsEditModalOpen(false);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false);
   }
 
   function handleEditOutcomeSubmit(id: number, dto: OutcomeRequestDTO) {
     onEditOutcomeSubmit(id, dto);
     setIsEditModalOpen(false);
+  }
+
+  function handleDeleteOutcomeSubmit(id: number) {
+    onDeleteOutcomeSubmit(id);
+    setIsDeleteModalOpen(false);
   }
 
   return (
@@ -149,7 +169,10 @@ function OutcomeTable({
                 </TableCell>
                 <TableCell padding="none" align="right">
                   <IconButton>
-                    <DeleteIcon color="warning" />
+                    <DeleteIcon
+                      color="warning"
+                      onClick={() => handleOnDeleteIconClick(outcome)}
+                    />
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -170,12 +193,20 @@ function OutcomeTable({
       {outcomeToEdit && (
         <EditOutcomeModal
           open={isEditModalOpen}
-          onClose={handleCloseModal}
+          onClose={handleCloseEditModal}
           onSubmit={handleEditOutcomeSubmit}
           outcomeCategoryList={outcomeCategoryList}
           paymentMethodList={paymentMethodList}
           bankList={bankList}
           initialOutcome={outcomeToEdit}
+        />
+      )}
+      {outcomeToDelete && (
+        <DeleteOutcomeModal
+          initialOutcome={outcomeToDelete}
+          onClose={handleCloseDeleteModal}
+          onSubmit={handleDeleteOutcomeSubmit}
+          open={isDeleteModalOpen}
         />
       )}
     </>

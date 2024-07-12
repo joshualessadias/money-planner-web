@@ -56,7 +56,11 @@ function EditOutcomeModal({
       disableEscapeKeyDown
     >
       <Box sx={style}>
-        <Stack justifyContent="space-between" direction="row">
+        <Stack
+          justifyContent="space-between"
+          direction="row"
+          alignItems="center"
+        >
           <Typography variant="h5">Editar um Gasto</Typography>
           <IconButton onClick={onClose}>
             <CloseIcon />
