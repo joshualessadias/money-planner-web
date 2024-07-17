@@ -57,16 +57,40 @@ export const darkTheme = createTheme({
     info: {
       main: grey[600],
     },
+    background: {
+      default: "#0a0c0c",
+      paper: "#0a0c0c",
+    },
   },
   components: {
     MuiCard: {
       defaultProps: {
-        elevation: 1,
+        elevation: 2,
+        style: {
+          borderRadius: 24,
+        },
       },
     },
     MuiPaper: {
       defaultProps: {
-        elevation: 1,
+        elevation: 2,
+        style: {
+          borderRadius: 24,
+        },
+      },
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        style: {
+          borderRadius: 16,
+        },
+      },
+    },
+    MuiInputBase: {
+      defaultProps: {
+        style: {
+          borderRadius: 16,
+        },
       },
     },
   },
