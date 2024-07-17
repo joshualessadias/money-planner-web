@@ -81,7 +81,7 @@ export default function DeleteOutcomeModal({
             </Button>
             <Button
               variant="contained"
-              color="warning"
+              color="error"
               onClick={() => onSubmit(initialOutcome.id)}
             >
               Confirmar

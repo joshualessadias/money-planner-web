@@ -141,7 +141,7 @@ function OutcomeTable({
   return (
     <>
       <TableContainer>
-        <Table sx={{ minWidth: 650 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple-table">
           <OutcomeTableHead
             onRequestSort={handleRequestSort}
             order={order}
@@ -149,7 +149,7 @@ function OutcomeTable({
           />
           <TableBody>
             {outcomes.map((outcome) => (
-              <TableRow className="border-t" key={outcome.id}>
+              <TableRow key={outcome.id}>
                 <TableCell scope="row">{outcome.description}</TableCell>
                 <TableCell align="right">
                   {formatCurrency(outcome.value)}
@@ -170,7 +170,7 @@ function OutcomeTable({
                 <TableCell padding="none" align="right">
                   <IconButton>
                     <DeleteIcon
-                      color="warning"
+                      color="error"
                       onClick={() => handleOnDeleteIconClick(outcome)}
                     />
                   </IconButton>

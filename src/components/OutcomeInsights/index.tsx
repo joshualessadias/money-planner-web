@@ -1,6 +1,7 @@
 import React from "react";
 import KpiCard from "@/components/OutcomeInsights/KpiCard";
 import { OutcomeKpiResponseDTO } from "@/entities/money-planner-api";
+import { Box } from "@mui/material";
 
 interface OutcomeInsightsProps {
   insights: OutcomeKpiResponseDTO;
@@ -8,7 +9,7 @@ interface OutcomeInsightsProps {
 
 const OutcomeInsights = ({ insights }: OutcomeInsightsProps) => {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
+    <Box style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
       <KpiCard text="Gasto Total" value={insights.totalValue} />
       {insights.kpiByCategoryList.slice(0, 3).map((kpi) => (
         <KpiCard
@@ -17,7 +18,7 @@ const OutcomeInsights = ({ insights }: OutcomeInsightsProps) => {
           value={kpi.value}
         />
       ))}
-    </div>
+    </Box>
   );
 };
 

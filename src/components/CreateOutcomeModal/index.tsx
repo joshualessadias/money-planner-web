@@ -1,4 +1,4 @@
-import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
+import { IconButton, Modal, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 import CreateOutcomeForm from "@/components/CreateOutcomeModal/CreateOutcomeForm";
 import CloseIcon from "@mui/icons-material/Close";
@@ -26,19 +26,6 @@ function CreateOutcomeModal({
   paymentMethodList,
   bankList,
 }: CreateOutcomeModalProps) {
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    // width: 400,
-    // height: 400,
-    bgcolor: "background.paper",
-    borderRadius: 2,
-    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
-    p: 2,
-  };
-
   function handleSubmit(dto: OutcomeRequestDTO) {
     onSubmit(dto);
   }
@@ -52,7 +39,15 @@ function CreateOutcomeModal({
       }}
       disableEscapeKeyDown
     >
-      <Box sx={style}>
+      <Paper
+        sx={{
+          position: "absolute" as "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          p: 2,
+        }}
+      >
         <Stack
           justifyContent="space-between"
           direction="row"
@@ -69,7 +64,7 @@ function CreateOutcomeModal({
           bankList={bankList}
           onSubmit={handleSubmit}
         />
-      </Box>
+      </Paper>
     </Modal>
   );
 }
