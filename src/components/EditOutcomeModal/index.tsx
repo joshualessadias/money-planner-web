@@ -1,4 +1,4 @@
-import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
+import { IconButton, Modal, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { OutcomeRequestDTO } from "@/entities/outcome";
@@ -29,19 +29,6 @@ function EditOutcomeModal({
   bankList,
   initialOutcome,
 }: EditOutcomeModalProps) {
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    // width: 400,
-    // height: 400,
-    bgcolor: "background.paper",
-    borderRadius: 2,
-    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
-    p: 2,
-  };
-
   function handleSubmit(id: number, dto: OutcomeRequestDTO) {
     onSubmit(id, dto);
   }
@@ -55,7 +42,15 @@ function EditOutcomeModal({
       }}
       disableEscapeKeyDown
     >
-      <Box sx={style}>
+      <Paper
+        sx={{
+          position: "absolute" as "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          p: 2,
+        }}
+      >
         <Stack
           justifyContent="space-between"
           direction="row"
@@ -73,7 +68,7 @@ function EditOutcomeModal({
           onSubmit={handleSubmit}
           initialOutcome={initialOutcome}
         />
-      </Box>
+      </Paper>
     </Modal>
   );
 }
