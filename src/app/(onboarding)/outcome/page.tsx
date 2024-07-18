@@ -9,7 +9,7 @@ import {
 } from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
-import { Button, Container, Paper, Stack } from "@mui/material";
+import { Button, Paper, Stack } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
@@ -140,9 +140,8 @@ const Page = () => {
 
   return (
     <div>
-      <Container maxWidth="lg">
+      <Stack spacing={2} paddingY={4} paddingX={8}>
         <Stack
-          className="p-4"
           direction={{ sm: "row", xs: "column" }}
           spacing={{ xs: 1, sm: 2 }}
           justifyContent="space-between"
@@ -157,7 +156,7 @@ const Page = () => {
             Criar Gasto
           </Button>
         </Stack>
-        <Paper className="p-4 m-4">
+        <Paper sx={{ padding: 2 }}>
           <OutcomeTableToolbar
             onFilterClick={handleDateRangeChange}
             outcomeCategoryList={outcomeCategoryList}
@@ -174,7 +173,7 @@ const Page = () => {
             onDeleteOutcomeSubmit={handleDeleteOutcomeSubmit}
           />
         </Paper>
-      </Container>
+      </Stack>
       <CreateOutcomeModal
         open={isModalOpen}
         onClose={handleCloseModal}

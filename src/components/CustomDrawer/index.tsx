@@ -8,12 +8,18 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { Target, HandCoins } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  HandCoins,
+  Target,
+} from "lucide-react";
 import { useState } from "react";
 
 export default function CustomDrawer() {
+  const OPEN_DRAWER_WIDTH = 207.46;
+  const CLOSED_DRAWER_WIDTH = 87.97;
+
   const [open, setOpen] = useState<boolean>(true);
 
   const drawerItemList = [
@@ -22,7 +28,11 @@ export default function CustomDrawer() {
   ];
 
   return (
-    <Drawer variant="permanent" open={open}>
+    <Drawer
+      variant="permanent"
+      open={open}
+      sx={{ width: open ? OPEN_DRAWER_WIDTH : CLOSED_DRAWER_WIDTH }}
+    >
       <div
         style={{
           display: "flex",

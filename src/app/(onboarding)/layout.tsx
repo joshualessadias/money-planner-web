@@ -10,9 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <Box display="flex" flexDirection="row">
+        <Box display="flex">
           <CustomDrawer />
-          <Box marginX="auto">{children}</Box>
+          <Box flexGrow="1">{children}</Box>
         </Box>
       </body>
     </html>
