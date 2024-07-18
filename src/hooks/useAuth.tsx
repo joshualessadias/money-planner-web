@@ -101,7 +101,6 @@ const useAuth = () => {
     setLoading(true);
 
     try {
-      await api.delete("/auth/logout");
       setIsAuth(false);
       setUser(undefined);
       localStorage.removeItem("token");
