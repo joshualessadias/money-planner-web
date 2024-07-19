@@ -3,7 +3,7 @@ import { OutcomeRequestDTO } from "@/entities/outcome";
 import { AxiosResponse } from "axios";
 import { OutcomeKpiResponseDTO } from "@/entities/money-planner-api";
 
-export interface PageableFilterProps {
+interface PageableFilterProps {
   page: number;
   size: number;
   orderBy: string;

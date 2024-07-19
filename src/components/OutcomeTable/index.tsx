@@ -96,8 +96,10 @@ function OutcomeTable({
     setPage(page);
   }
 
-  function handleRowsPerPageChande(e: any) {
-    setSize(e.target.value);
+  function handleRowsPerPageChange(
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
+    setSize(Number(e.target.value));
   }
 
   function handleRequestSort(
@@ -142,24 +144,21 @@ function OutcomeTable({
     {
       id: "description",
       numeric: false,
-      disablePadding: true,
       label: "Descrição",
     },
-    { id: "value", numeric: true, disablePadding: false, label: "Valor" },
-    { id: "date", numeric: false, disablePadding: false, label: "Data" },
+    { id: "value", numeric: true, label: "Valor" },
+    { id: "date", numeric: false, label: "Data" },
     {
       id: "category",
       numeric: false,
-      disablePadding: false,
       label: "Categoria",
     },
     {
       id: "paymentMethod",
       numeric: false,
-      disablePadding: false,
       label: "Método de Pagamento",
     },
-    { id: "bank", numeric: false, disablePadding: false, label: "Banco" },
+    { id: "bank", numeric: false, label: "Banco" },
   ];
 
   return (
@@ -185,14 +184,16 @@ function OutcomeTable({
                 </TableCell>
                 <TableCell>{outcome.paymentMethod.name}</TableCell>
                 <TableCell>{outcome.bank.name}</TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell
+                  padding="none"
+                  align="right"
+                  sx={{ textWrap: "nowrap" }}
+                >
                   <IconButton>
                     <ModeEditIcon
                       onClick={() => handleOnModeEditIconClick(outcome)}
                     />
                   </IconButton>
-                </TableCell>
-                <TableCell padding="none" align="right">
                   <IconButton>
                     <DeleteIcon
                       color="error"
@@ -211,7 +212,7 @@ function OutcomeTable({
         color={"primary"}
         page={page}
         rowsPerPage={size}
-        onRowsPerPageChange={handleRowsPerPageChande}
+        onRowsPerPageChange={handleRowsPerPageChange}
         onPageChange={handlePageChange}
         count={totalElements}
       ></TablePagination>

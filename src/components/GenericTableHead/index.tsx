@@ -10,7 +10,6 @@ import { Order } from "@/types";
 import { visuallyHidden } from "@mui/utils";
 
 export interface HeadCell<T> {
-  disablePadding: boolean;
   id: keyof T;
   label: string;
   numeric: boolean;
@@ -19,7 +18,7 @@ export interface HeadCell<T> {
 interface GenericTableHeadProps<T> {
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
   order: Order;
-  orderBy: string;
+  orderBy: string | undefined;
   headCells: HeadCell<T>[];
 }
 
@@ -42,7 +41,7 @@ function GenericTableHead<T>({
             key={index}
             className="p-4 font-bold"
             align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
+            padding={index == 0 ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -59,8 +58,7 @@ function GenericTableHead<T>({
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell key="edit"></TableCell>
-        <TableCell key="delete"></TableCell>
+        <TableCell key="actions"></TableCell>
       </TableRow>
     </TableHead>
   );
