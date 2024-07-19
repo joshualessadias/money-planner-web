@@ -9,12 +9,12 @@ import {
 } from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
-import { Button, Paper, Stack } from "@mui/material";
+import { Button, Container, Paper, Stack } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
-import OutcomeTableToolbar from "@/components/OutcomeTable/OutcomeTableToolbar";
+import OutcomeTableToolbar from "../../../components/OutcomeTableToolbar";
 import { getOutcomeCategoryList } from "@/services/Api/entities/outcomeCategory";
 import { getPaymentMethodList } from "@/services/Api/entities/paymentMethod";
 import { getBankList } from "@/services/Api/entities/bank";
@@ -139,8 +139,8 @@ const Page = () => {
   }
 
   return (
-    <div>
-      <Stack spacing={2} paddingY={4} paddingX={8}>
+    <Container>
+      <Stack spacing={2}>
         <Stack
           direction={{ sm: "row", xs: "column" }}
           spacing={{ xs: 1, sm: 2 }}
@@ -148,7 +148,7 @@ const Page = () => {
         >
           <OutcomeInsights insights={insights} />
           <Button
-            className="h-9 self-end text-nowrap w-48"
+            sx={{ alignSelf: "flex-end", textWrap: "nowrap" }}
             variant="contained"
             startIcon={<Add />}
             onClick={handleOnCreateOutcomeClick}
@@ -182,7 +182,7 @@ const Page = () => {
         paymentMethodList={paymentMethodList}
         bankList={bankList}
       />
-    </div>
+    </Container>
   );
 };
 

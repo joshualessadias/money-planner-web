@@ -17,18 +17,21 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useAuthContext } from "@/contexts/auth/authContext";
+import { useRouter } from "next/navigation";
 
 export default function CustomDrawer() {
+  const router = useRouter();
   const { handleLogout } = useAuthContext();
 
   const OPEN_DRAWER_WIDTH = 207.46;
   const CLOSED_DRAWER_WIDTH = 87.97;
 
   const [open, setOpen] = useState<boolean>(true);
+  const [selectedTab, setSelectedTab] = useState<number>();
 
   const startItemList = [
-    { text: "Gastos", icon: <HandCoins /> },
-    { text: "Meta de gastos", icon: <Target /> },
+    { text: "Gastos", icon: <HandCoins />, route: "/outcome" },
+    { text: "Meta de Gastos", icon: <Target />, route: "/spending-goal" },
   ];
 
   const endItemList = [{ text: "Sair", icon: <User />, route: "/login" }];
@@ -58,12 +61,19 @@ export default function CustomDrawer() {
           </IconButton>
           <Divider style={{ minWidth: "100%" }} />
           <List>
-            {startItemList.map(({ text, icon }, index) => (
+            {startItemList.map(({ text, icon, route }, index) => (
               <ListItem key={text} sx={{ paddingX: 0 }}>
                 <ListItemButton
                   sx={{
                     justifyContent: open ? "initial" : "center",
                     minHeight: 48,
+                  }}
+                  selected={selectedTab === index}
+                  onClick={() => {
+                    if (selectedTab !== index) {
+                      setSelectedTab(index);
+                      router.push(route);
+                    }
                   }}
                 >
                   <ListItemIcon

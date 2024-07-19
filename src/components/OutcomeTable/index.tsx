@@ -16,7 +16,7 @@ import {
 } from "@/entities/money-planner-api";
 import formatCurrency from "@/helpers/currencyMask";
 import formatDate from "@/helpers/dateMask";
-import OutcomeTableHead from "@/components/OutcomeTable/OutcomeTableHead";
+import GenericTableHead, { HeadCell } from "../GenericTableHead";
 import { Order } from "@/types";
 import { getPageableOutcomes } from "@/services/Api/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
@@ -138,14 +138,39 @@ function OutcomeTable({
     setIsDeleteModalOpen(false);
   }
 
+  const headCells: HeadCell<OutcomeResponseDTO>[] = [
+    {
+      id: "description",
+      numeric: false,
+      disablePadding: true,
+      label: "Descrição",
+    },
+    { id: "value", numeric: true, disablePadding: false, label: "Valor" },
+    { id: "date", numeric: false, disablePadding: false, label: "Data" },
+    {
+      id: "category",
+      numeric: false,
+      disablePadding: false,
+      label: "Categoria",
+    },
+    {
+      id: "paymentMethod",
+      numeric: false,
+      disablePadding: false,
+      label: "Método de Pagamento",
+    },
+    { id: "bank", numeric: false, disablePadding: false, label: "Banco" },
+  ];
+
   return (
     <>
       <TableContainer>
-        <Table sx={{ minWidth: 650 }} aria-label="simple-table">
-          <OutcomeTableHead
+        <Table>
+          <GenericTableHead<OutcomeResponseDTO>
             onRequestSort={handleRequestSort}
             order={order}
             orderBy={orderedField}
+            headCells={headCells}
           />
           <TableBody>
             {outcomes.map((outcome) => (
