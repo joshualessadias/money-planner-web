@@ -13,20 +13,25 @@ import {
   ChevronRightIcon,
   HandCoins,
   Target,
-  User,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuthContext } from "@/contexts/auth/authContext";
 import { useRouter } from "next/navigation";
 
-export default function CustomDrawer() {
+interface CustomDrawerProps {
+  open: boolean;
+  onSetOpen: (open: boolean) => void;
+  drawerWidth: number;
+}
+
+export default function CustomDrawer({
+  drawerWidth,
+  open,
+  onSetOpen,
+}: CustomDrawerProps) {
   const router = useRouter();
   const { handleLogout } = useAuthContext();
-
-  const OPEN_DRAWER_WIDTH = 207.46;
-  const CLOSED_DRAWER_WIDTH = 87.97;
-
-  const [open, setOpen] = useState<boolean>(true);
   const [selectedTab, setSelectedTab] = useState<number>();
 
   const startItemList = [
@@ -34,14 +39,10 @@ export default function CustomDrawer() {
     { text: "Meta de Gastos", icon: <Target />, route: "/spending-goal" },
   ];
 
-  const endItemList = [{ text: "Sair", icon: <User />, route: "/login" }];
+  const endItemList = [{ text: "Sair", icon: <LogOut />, route: "/login" }];
 
   return (
-    <Drawer
-      variant="permanent"
-      open={open}
-      sx={{ width: open ? OPEN_DRAWER_WIDTH : CLOSED_DRAWER_WIDTH }}
-    >
+    <Drawer variant="permanent" open={open} sx={{ width: drawerWidth }}>
       <div
         style={{
           display: "flex",
@@ -55,7 +56,7 @@ export default function CustomDrawer() {
         <div>
           <IconButton
             sx={{ marginBottom: "0.5rem", minHeight: 48, paddingX: 2 }}
-            onClick={() => setOpen(!open)}
+            onClick={() => onSetOpen(!open)}
           >
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
