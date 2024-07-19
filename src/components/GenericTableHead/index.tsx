@@ -7,62 +7,40 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import { Order } from "@/types";
-import { OutcomeResponseDTO } from "@/entities/money-planner-api";
 import { visuallyHidden } from "@mui/utils";
 
-interface EnhancedTableProps {
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof OutcomeResponseDTO
-  ) => void;
-  order: Order;
-  orderBy: string;
-}
-
-interface HeadCell {
+export interface HeadCell<T> {
   disablePadding: boolean;
-  id: keyof OutcomeResponseDTO;
+  id: keyof T;
   label: string;
   numeric: boolean;
 }
 
-const headCells: readonly HeadCell[] = [
-  {
-    id: "description",
-    numeric: false,
-    disablePadding: true,
-    label: "Descrição",
-  },
-  { id: "value", numeric: true, disablePadding: false, label: "Valor" },
-  { id: "date", numeric: false, disablePadding: false, label: "Data" },
-  { id: "category", numeric: false, disablePadding: false, label: "Categoria" },
-  {
-    id: "paymentMethod",
-    numeric: false,
-    disablePadding: false,
-    label: "Método de Pagamento",
-  },
-  { id: "bank", numeric: false, disablePadding: false, label: "Banco" },
-];
+interface GenericTableHeadProps<T> {
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
+  order: Order;
+  orderBy: string;
+  headCells: HeadCell<T>[];
+}
 
-function OutcomeTableHead({
+function GenericTableHead<T>({
   order,
   orderBy,
   onRequestSort,
-}: EnhancedTableProps) {
+  headCells,
+}: GenericTableHeadProps<T>) {
   const createSortHandler =
-    (property: keyof OutcomeResponseDTO) =>
-    (event: React.MouseEvent<unknown>) => {
+    (property: keyof T) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
   return (
     <TableHead>
       <TableRow>
-        {headCells.map((headCell) => (
+        {headCells.map((headCell, index) => (
           <TableCell
+            key={index}
             className="p-4 font-bold"
-            key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -88,4 +66,4 @@ function OutcomeTableHead({
   );
 }
 
-export default OutcomeTableHead;
+export default GenericTableHead;
