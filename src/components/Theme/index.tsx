@@ -102,5 +102,10 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+      },
+    },
   },
 });
