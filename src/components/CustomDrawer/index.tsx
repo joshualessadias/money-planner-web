@@ -12,8 +12,8 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   HandCoins,
-  Target,
   LogOut,
+  Target,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuthContext } from "@/contexts/auth/authContext";
@@ -22,13 +22,13 @@ import { useRouter } from "next/navigation";
 interface CustomDrawerProps {
   open: boolean;
   onSetOpen: (open: boolean) => void;
-  drawerWidth: number;
+  shouldShowPermanentDrawer: boolean;
 }
 
 export default function CustomDrawer({
-  drawerWidth,
   open,
   onSetOpen,
+  shouldShowPermanentDrawer,
 }: CustomDrawerProps) {
   const router = useRouter();
   const { handleLogout } = useAuthContext();
@@ -42,7 +42,10 @@ export default function CustomDrawer({
   const endItemList = [{ text: "Sair", icon: <LogOut />, route: "/login" }];
 
   return (
-    <Drawer variant="permanent" open={open} sx={{ width: drawerWidth }}>
+    <Drawer
+      variant={shouldShowPermanentDrawer ? "permanent" : "temporary"}
+      open={open}
+    >
       <div
         style={{
           display: "flex",
