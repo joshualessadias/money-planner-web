@@ -93,5 +93,19 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiContainer: {
+      defaultProps: {
+        maxWidth: "xl",
+        style: {
+          paddingTop: 24,
+          paddingBottom: 24,
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+      },
+    },
   },
 });

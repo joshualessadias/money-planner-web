@@ -16,7 +16,7 @@ import {
 } from "@/entities/money-planner-api";
 import formatCurrency from "@/helpers/currencyMask";
 import formatDate from "@/helpers/dateMask";
-import OutcomeTableHead from "@/components/OutcomeTable/OutcomeTableHead";
+import GenericTableHead, { HeadCell } from "../GenericTableHead";
 import { Order } from "@/types";
 import { getPageableOutcomes } from "@/services/Api/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
@@ -96,8 +96,10 @@ function OutcomeTable({
     setPage(page);
   }
 
-  function handleRowsPerPageChande(e: any) {
-    setSize(e.target.value);
+  function handleRowsPerPageChange(
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
+    setSize(Number(e.target.value));
   }
 
   function handleRequestSort(
@@ -138,14 +140,36 @@ function OutcomeTable({
     setIsDeleteModalOpen(false);
   }
 
+  const headCells: HeadCell<OutcomeResponseDTO>[] = [
+    {
+      id: "description",
+      numeric: false,
+      label: "Descrição",
+    },
+    { id: "value", numeric: true, label: "Valor" },
+    { id: "date", numeric: false, label: "Data" },
+    {
+      id: "category",
+      numeric: false,
+      label: "Categoria",
+    },
+    {
+      id: "paymentMethod",
+      numeric: false,
+      label: "Método de Pagamento",
+    },
+    { id: "bank", numeric: false, label: "Banco" },
+  ];
+
   return (
     <>
       <TableContainer>
-        <Table sx={{ minWidth: 650 }} aria-label="simple-table">
-          <OutcomeTableHead
+        <Table>
+          <GenericTableHead<OutcomeResponseDTO>
             onRequestSort={handleRequestSort}
             order={order}
             orderBy={orderedField}
+            headCells={headCells}
           />
           <TableBody>
             {outcomes.map((outcome) => (
@@ -160,14 +184,16 @@ function OutcomeTable({
                 </TableCell>
                 <TableCell>{outcome.paymentMethod.name}</TableCell>
                 <TableCell>{outcome.bank.name}</TableCell>
-                <TableCell padding="none" align="right">
+                <TableCell
+                  padding="none"
+                  align="right"
+                  sx={{ textWrap: "nowrap" }}
+                >
                   <IconButton>
                     <ModeEditIcon
                       onClick={() => handleOnModeEditIconClick(outcome)}
                     />
                   </IconButton>
-                </TableCell>
-                <TableCell padding="none" align="right">
                   <IconButton>
                     <DeleteIcon
                       color="error"
@@ -186,7 +212,7 @@ function OutcomeTable({
         color={"primary"}
         page={page}
         rowsPerPage={size}
-        onRowsPerPageChange={handleRowsPerPageChande}
+        onRowsPerPageChange={handleRowsPerPageChange}
         onPageChange={handlePageChange}
         count={totalElements}
       ></TablePagination>

@@ -14,7 +14,7 @@ import { Add } from "@mui/icons-material";
 import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
-import OutcomeTableToolbar from "@/components/OutcomeTable/OutcomeTableToolbar";
+import OutcomeTableToolbar from "../../../components/OutcomeTableToolbar";
 import { getOutcomeCategoryList } from "@/services/Api/entities/outcomeCategory";
 import { getPaymentMethodList } from "@/services/Api/entities/paymentMethod";
 import { getBankList } from "@/services/Api/entities/bank";
@@ -139,17 +139,16 @@ const Page = () => {
   }
 
   return (
-    <div>
-      <Container maxWidth="lg">
+    <Container>
+      <Stack spacing={2}>
         <Stack
-          className="p-4"
           direction={{ sm: "row", xs: "column" }}
           spacing={{ xs: 1, sm: 2 }}
           justifyContent="space-between"
         >
           <OutcomeInsights insights={insights} />
           <Button
-            className="h-9 self-end text-nowrap w-48"
+            sx={{ alignSelf: "flex-end", textWrap: "nowrap" }}
             variant="contained"
             startIcon={<Add />}
             onClick={handleOnCreateOutcomeClick}
@@ -157,7 +156,7 @@ const Page = () => {
             Criar Gasto
           </Button>
         </Stack>
-        <Paper className="p-4 m-4">
+        <Paper sx={{ padding: 2 }}>
           <OutcomeTableToolbar
             onFilterClick={handleDateRangeChange}
             outcomeCategoryList={outcomeCategoryList}
@@ -174,7 +173,7 @@ const Page = () => {
             onDeleteOutcomeSubmit={handleDeleteOutcomeSubmit}
           />
         </Paper>
-      </Container>
+      </Stack>
       <CreateOutcomeModal
         open={isModalOpen}
         onClose={handleCloseModal}
@@ -183,7 +182,7 @@ const Page = () => {
         paymentMethodList={paymentMethodList}
         bankList={bankList}
       />
-    </div>
+    </Container>
   );
 };
 

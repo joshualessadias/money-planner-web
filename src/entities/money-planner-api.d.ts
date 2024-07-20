@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-// Generated using typescript-generator version 3.2.1263 on 2024-07-12 11:29:01.
+// Generated using typescript-generator version 3.2.1263 on 2024-07-19 11:10:46.
 
 export interface AppUserFilterRequestDTO extends BaseFilter {
   name: string;
@@ -76,6 +76,21 @@ export interface PaymentMethodRequestDTO {
   code: string;
 }
 
+export interface CategorySpendingGoalRequestDTO {
+  id: number;
+  value: number;
+  outcomeCategoryId: number;
+  isPercentual: boolean;
+}
+
+export interface SpendingGoalRequestDTO {
+  name: string;
+  value: number;
+  initialDate: number;
+  finalDate: number;
+  categorySpendingGoalList: CategorySpendingGoalRequestDTO[];
+}
+
 export interface AppUserResponseDTO {
   id: number;
   firstName: string;
@@ -134,9 +149,25 @@ export interface OutcomeKpiResponseDTO {
   kpiByCategoryList: OutcomeKpiByCategoryResponseDTO[];
 }
 
+export interface CategorySpendingGoalResponseDTO {
+  id: number;
+  value: number;
+  isPercentual: boolean;
+  outcomeCategory: OutcomeCategoryResponseDTO;
+}
+
+export interface SpendingGoalResponseDTO {
+  id: number;
+  name: string;
+  value: number;
+  initialDate: number;
+  finalDate: number;
+  categorySpendingGoalList: CategorySpendingGoalResponseDTO[];
+}
+
 export interface Page<T> extends Slice<T> {
-  totalPages: number;
   totalElements: number;
+  totalPages: number;
 }
 
 export interface BaseFilter {
@@ -155,10 +186,10 @@ export interface Sort extends Streamable<Order> {
 export interface Pageable {
   offset: number;
   sort: Sort;
+  unpaged: boolean;
+  paged: boolean;
   pageSize: number;
   pageNumber: number;
-  paged: boolean;
-  unpaged: boolean;
 }
 
 export interface Slice<T> extends Streamable<T> {
@@ -166,9 +197,9 @@ export interface Slice<T> extends Streamable<T> {
   content: T[];
   number: number;
   sort: Sort;
-  pageable: Pageable;
-  last: boolean;
   first: boolean;
+  last: boolean;
+  pageable: Pageable;
   numberOfElements: number;
 }
 

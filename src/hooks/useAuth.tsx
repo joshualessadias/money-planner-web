@@ -82,6 +82,12 @@ const useAuth = () => {
         authRequest
       );
 
+      if (response.status != 200) {
+        console.log("Error on login");
+        setLoading(false);
+        return;
+      }
+
       const accessToken = response.data.token;
 
       localStorage.setItem("token", JSON.stringify(accessToken));
@@ -101,7 +107,6 @@ const useAuth = () => {
     setLoading(true);
 
     try {
-      await api.delete("/auth/logout");
       setIsAuth(false);
       setUser(undefined);
       localStorage.removeItem("token");
