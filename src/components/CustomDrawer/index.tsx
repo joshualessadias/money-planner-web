@@ -18,6 +18,7 @@ import {
 import { useState } from "react";
 import { useAuthContext } from "@/contexts/auth/authContext";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface CustomDrawerProps {
   open: boolean;
@@ -57,6 +58,16 @@ export default function CustomDrawer({
         }}
       >
         <div>
+          <List>
+            <ListItem sx={{ justifyContent: "center", paddingX: 0 }}>
+              <Image
+                src="/favicon-white.svg"
+                alt="logo"
+                width={32}
+                height={32}
+              />
+            </ListItem>
+          </List>
           <IconButton
             sx={{ marginBottom: "0.5rem", minHeight: 48, paddingX: 2 }}
             onClick={() => onSetOpen(!open)}

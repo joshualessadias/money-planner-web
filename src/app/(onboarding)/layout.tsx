@@ -8,8 +8,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const theme = useTheme();
-  // const shouldShowPermanentDrawer = useMediaQuery(theme.breakpoints.up("md"));
-  const shouldShowPermanentDrawer = true;
+  const shouldShowPermanentDrawer = useMediaQuery(theme.breakpoints.up("md"));
   const [open, setOpen] = useState<boolean>(true);
 
   const openedDrawerWidth = 211;

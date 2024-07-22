@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
+import Image from "next/image";
 
 const Page = () => {
   const { handleLogin } = useAuthContext();
@@ -34,7 +35,7 @@ const Page = () => {
       gap={4}
     >
       <Stack flexDirection="row" alignItems="center" gap={2}>
-        <img src="/favicon.svg" alt="logo" className="w-8 h-8" />
+        <Image src="/favicon.svg" alt="logo" width={32} height={32} />
         <Typography fontWeight="bold" fontSize="xx-large">
           Nosso Planner
         </Typography>
