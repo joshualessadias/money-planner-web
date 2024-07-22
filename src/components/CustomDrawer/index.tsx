@@ -46,6 +46,7 @@ export default function CustomDrawer({
     <Drawer
       variant={shouldShowPermanentDrawer ? "permanent" : "temporary"}
       open={open}
+      onClose={() => onSetOpen(false)}
     >
       <div
         style={{
@@ -58,23 +59,27 @@ export default function CustomDrawer({
         }}
       >
         <div>
-          <List>
-            <ListItem sx={{ justifyContent: "center", paddingX: 0 }}>
-              <Image
-                src="/favicon-white.svg"
-                alt="logo"
-                width={32}
-                height={32}
-              />
-            </ListItem>
-          </List>
-          <IconButton
-            sx={{ marginBottom: "0.5rem", minHeight: 48, paddingX: 2 }}
-            onClick={() => onSetOpen(!open)}
-          >
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-          <Divider style={{ minWidth: "100%" }} />
+          {shouldShowPermanentDrawer && (
+            <>
+              <List>
+                <ListItem sx={{ justifyContent: "center", paddingX: 0 }}>
+                  <Image
+                    src="/favicon-white.svg"
+                    alt="logo"
+                    width={32}
+                    height={32}
+                  />
+                </ListItem>
+              </List>
+              <IconButton
+                sx={{ marginBottom: "0.5rem", minHeight: 48, paddingX: 2 }}
+                onClick={() => onSetOpen(!open)}
+              >
+                {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </IconButton>
+              <Divider style={{ minWidth: "100%" }} />
+            </>
+          )}
           <List>
             {startItemList.map(({ text, icon, route }, index) => (
               <ListItem key={text} sx={{ paddingX: 0 }}>
@@ -104,7 +109,7 @@ export default function CustomDrawer({
         </div>
         <div>
           <List>
-            {endItemList.map(({ text, icon, route }, index) => (
+            {endItemList.map(({ text, icon }, _) => (
               <ListItem key={text} sx={{ paddingX: 0 }}>
                 <ListItemButton
                   sx={{

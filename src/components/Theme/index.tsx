@@ -79,6 +79,13 @@ export const darkTheme = createTheme({
         },
       },
     },
+    MuiAppBar: {
+      defaultProps: {
+        style: {
+          borderRadius: 0,
+        },
+      },
+    },
     MuiButtonBase: {
       defaultProps: {
         style: {

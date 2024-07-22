@@ -1,15 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+import { Toolbar, useMediaQuery, useTheme } from "@mui/material";
+import CustomAppBar from "@/components/CustomAppBar";
 import CustomDrawer from "@/components/CustomDrawer";
-import { AppBar, useMediaQuery, useTheme } from "@mui/material";
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const theme = useTheme();
   const shouldShowPermanentDrawer = useMediaQuery(theme.breakpoints.up("md"));
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   const openedDrawerWidth = 211;
   const closedDrawerWidth = 88;
@@ -22,7 +23,12 @@ export default function RootLayout({
           onSetOpen={setOpen}
           shouldShowPermanentDrawer={shouldShowPermanentDrawer}
         />
-        <AppBar position="static"></AppBar>
+        {!shouldShowPermanentDrawer && (
+          <>
+            <CustomAppBar isDrawerOpen={open} onSetIsDrawerOpenOpen={setOpen} />
+            <Toolbar />
+          </>
+        )}
         <div
           style={{
             marginLeft: shouldShowPermanentDrawer
