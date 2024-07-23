@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Container, Paper, Stack } from "@mui/material";
+import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import SpendingGoalTable from "@/components/SpendingGoalTable";
@@ -31,6 +31,9 @@ export default function Page() {
 
   return (
     <Container>
+      <Typography variant="h3" paddingBottom={2}>
+        Metas de Gastos
+      </Typography>
       <Stack spacing={2}>
         <Button
           sx={{ alignSelf: "flex-end", textWrap: "nowrap" }}

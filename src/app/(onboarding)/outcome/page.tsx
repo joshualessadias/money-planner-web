@@ -9,7 +9,7 @@ import {
 } from "@/services/Api/entities/outcome";
 import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
-import { Button, Container, Paper, Stack } from "@mui/material";
+import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
@@ -140,6 +140,9 @@ const Page = () => {
 
   return (
     <Container>
+      <Typography variant="h3" paddingBottom={2}>
+        Gastos
+      </Typography>
       <Stack spacing={2}>
         <Stack
           direction={{ sm: "row", xs: "column" }}
