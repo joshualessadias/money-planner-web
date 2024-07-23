@@ -22,7 +22,7 @@ import { getPageableOutcomes } from "@/services/Api/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditOutcomeModal from "@/components/EditOutcomeModal";
+import CreateOrEditOutcomeModal from "@/components/CreateOrEditOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 import DeleteOutcomeModal from "@/components/DeleteOutcomeModal";
 
@@ -39,7 +39,7 @@ interface OutcomeTableProps {
   bankList: BankResponseDTO[];
   outcomeCategoryList: OutcomeCategoryResponseDTO[];
   paymentMethodList: PaymentMethodResponseDTO[];
-  onEditOutcomeSubmit: (id: number, dto: OutcomeRequestDTO) => void;
+  onEditOutcomeSubmit: (dto: OutcomeRequestDTO, id: number) => void;
   onDeleteOutcomeSubmit: (id: number) => void;
 }
 
@@ -130,8 +130,8 @@ function OutcomeTable({
     setIsDeleteModalOpen(false);
   }
 
-  function handleEditOutcomeSubmit(id: number, dto: OutcomeRequestDTO) {
-    onEditOutcomeSubmit(id, dto);
+  function handleEditOutcomeSubmit(dto: OutcomeRequestDTO, id?: number) {
+    onEditOutcomeSubmit(dto, id ?? -1);
     setIsEditModalOpen(false);
   }
 
@@ -217,7 +217,7 @@ function OutcomeTable({
         count={totalElements}
       ></TablePagination>
       {outcomeToEdit && (
-        <EditOutcomeModal
+        <CreateOrEditOutcomeModal
           open={isEditModalOpen}
           onClose={handleCloseEditModal}
           onSubmit={handleEditOutcomeSubmit}

@@ -11,7 +11,6 @@ import OutcomeInsights from "@/components/OutcomeInsights";
 import OutcomeTable from "../../../components/OutcomeTable";
 import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import CreateOutcomeModal from "@/components/CreateOutcomeModal";
 import { OutcomeRequestDTO } from "@/entities/outcome";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
 import OutcomeTableToolbar from "../../../components/OutcomeTableToolbar";
@@ -25,6 +24,7 @@ import {
   PaymentMethodResponseDTO,
 } from "@/entities/money-planner-api";
 import { getFirstDayOfMonth, getLastDayOfMonth } from "@/helpers/datePicker";
+import CreateOrEditOutcomeModal from "@/components/CreateOrEditOutcomeModal";
 
 const Page = () => {
   const [insights, setInsights] = useState<OutcomeKpiResponseDTO>({
@@ -116,7 +116,7 @@ const Page = () => {
     });
   }
 
-  function handleEditOutcomeSubmit(id: number, dto: OutcomeRequestDTO) {
+  function handleEditOutcomeSubmit(dto: OutcomeRequestDTO, id: number) {
     updateOutcome(id, dto).then((res) => {
       if (res.status != 202) {
         showMessage("Erro ao atualizar gasto", "error");
@@ -177,7 +177,7 @@ const Page = () => {
           />
         </Paper>
       </Stack>
-      <CreateOutcomeModal
+      <CreateOrEditOutcomeModal
         open={isModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleCreateOutcomeSubmit}

@@ -1,4 +1,11 @@
-import { IconButton, Modal, Paper, Stack, Typography } from "@mui/material";
+import {
+  IconButton,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  Box,
+} from "@mui/material";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { OutcomeRequestDTO } from "@/entities/outcome";
@@ -8,19 +15,19 @@ import {
   OutcomeResponseDTO,
   PaymentMethodResponseDTO,
 } from "@/entities/money-planner-api";
-import EditOutcomeForm from "@/components/EditOutcomeModal/EditOutcomeForm";
+import CreateOrEditOutcomeForm from "@/components/CreateOrEditOutcomeModal/CreateOrEditOutcomeForm";
 
-interface EditOutcomeModalProps {
+interface CreateOrEditOutcomeModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: (id: number, dto: OutcomeRequestDTO) => void;
+  onSubmit: (dto: OutcomeRequestDTO, id?: number) => void;
   outcomeCategoryList: OutcomeCategoryResponseDTO[];
   paymentMethodList: PaymentMethodResponseDTO[];
   bankList: BankResponseDTO[];
-  initialOutcome: OutcomeResponseDTO;
+  initialOutcome?: OutcomeResponseDTO;
 }
 
-function EditOutcomeModal({
+function CreateOrEditOutcomeModal({
   open,
   onClose,
   onSubmit,
@@ -28,9 +35,9 @@ function EditOutcomeModal({
   paymentMethodList,
   bankList,
   initialOutcome,
-}: EditOutcomeModalProps) {
-  function handleSubmit(id: number, dto: OutcomeRequestDTO) {
-    onSubmit(id, dto);
+}: CreateOrEditOutcomeModalProps) {
+  function handleSubmit(dto: OutcomeRequestDTO, id?: number) {
+    onSubmit(dto, id);
   }
 
   return (
@@ -49,6 +56,8 @@ function EditOutcomeModal({
           left: "50%",
           transform: "translate(-50%, -50%)",
           p: 2,
+          minWidth: 330,
+          maxWidth: 1000,
         }}
       >
         <Stack
@@ -56,21 +65,25 @@ function EditOutcomeModal({
           direction="row"
           alignItems="center"
         >
-          <Typography variant="h5">Editar um Gasto</Typography>
+          <Typography variant="h5">
+            {initialOutcome ? "Editar um Gasto" : "Criar um Gasto"}
+          </Typography>
           <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Stack>
-        <EditOutcomeForm
-          outcomeCategoryList={outcomeCategoryList}
-          paymentMethodList={paymentMethodList}
-          bankList={bankList}
-          onSubmit={handleSubmit}
-          initialOutcome={initialOutcome}
-        />
+        <Box paddingTop={2}>
+          <CreateOrEditOutcomeForm
+            outcomeCategoryList={outcomeCategoryList}
+            paymentMethodList={paymentMethodList}
+            bankList={bankList}
+            onSubmit={handleSubmit}
+            initialOutcome={initialOutcome}
+          />
+        </Box>
       </Paper>
     </Modal>
   );
 }
 
-export default EditOutcomeModal;
+export default CreateOrEditOutcomeModal;
