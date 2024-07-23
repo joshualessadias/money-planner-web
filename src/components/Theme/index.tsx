@@ -62,38 +62,24 @@ export const darkTheme = createTheme({
       paper: "#0a0c0c",
     },
   },
+  typography: {
+    fontFamily: "monospace",
+  },
+  shape: {
+    borderRadius: 24,
+  },
   components: {
     MuiCard: {
       defaultProps: {
         elevation: 2,
-        style: {
-          borderRadius: 24,
-        },
       },
     },
     MuiPaper: {
       defaultProps: {
         elevation: 2,
-        style: {
-          borderRadius: 24,
-        },
-      },
-    },
-    MuiAppBar: {
-      defaultProps: {
-        style: {
-          borderRadius: 0,
-        },
       },
     },
     MuiButtonBase: {
-      defaultProps: {
-        style: {
-          borderRadius: 16,
-        },
-      },
-    },
-    MuiInputBase: {
       defaultProps: {
         style: {
           borderRadius: 16,
