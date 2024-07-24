@@ -57,7 +57,7 @@ function CreateOrEditOutcomeModal({
           transform: "translate(-50%, -50%)",
           p: 2,
           minWidth: 330,
-          maxWidth: 1000,
+          maxWidth: 500,
         }}
       >
         <Stack
