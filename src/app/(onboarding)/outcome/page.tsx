@@ -67,13 +67,13 @@ const Page = () => {
   }, [filter.initialDate, filter.finalDate, updateOutcomes, showMessage]);
 
   useEffect(() => {
-    getOutcomeCategoryList().then((res) => {
+    getOutcomeCategoryList({ orderBy: "name:asc" }).then((res) => {
       setOutcomeCategoryList(res);
     });
-    getPaymentMethodList().then((res) => {
+    getPaymentMethodList({ orderBy: "name:asc" }).then((res) => {
       setPaymentMethodList(res);
     });
-    getBankList().then((res) => {
+    getBankList({ orderBy: "name:asc" }).then((res) => {
       setBankList(res);
     });
   }, []);
