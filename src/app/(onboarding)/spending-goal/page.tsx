@@ -4,9 +4,13 @@ import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import SpendingGoalTable from "@/components/SpendingGoalTable";
-import { SpendingGoalResponseDTO } from "@/entities/money-planner-api";
+import {
+  SpendingGoalRequestDTO,
+  SpendingGoalResponseDTO,
+} from "@/entities/money-planner-api";
 import { getPageableSpendingGoals } from "@/services/Api/entities/spendingGoal";
 import { useAlertSnackbar } from "@/contexts/alertSnackbarContext";
+import CreateOrEditSpendingGoalModal from "@/components/CreateOrEditSpendingGoalModal";
 
 export default function Page() {
   const { showMessage } = useAlertSnackbar();
@@ -17,6 +21,7 @@ export default function Page() {
   const [size, setSize] = useState<number>(10);
   const [orderBy, setOrderBy] = useState<string>();
   const [totalElements, setTotalElements] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getPageableSpendingGoals({ page, size, orderBy }).then((res) => {
@@ -29,6 +34,18 @@ export default function Page() {
     });
   }, [orderBy, page, showMessage, size]);
 
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  }
+
+  function handleCreateSpendingGoalSubmit(dto: SpendingGoalRequestDTO) {
+    console.log(dto);
+  }
+
+  function handleOnCreateSpendingGoalClick() {
+    setIsModalOpen(true);
+  }
+
   return (
     <Container>
       <Typography variant="h3" paddingBottom={2}>
@@ -39,6 +56,7 @@ export default function Page() {
           sx={{ alignSelf: "flex-end", textWrap: "nowrap" }}
           variant="contained"
           startIcon={<Add />}
+          onClick={handleOnCreateSpendingGoalClick}
         >
           Criar Meta de Gastos
         </Button>
@@ -54,6 +72,11 @@ export default function Page() {
           />
         </Paper>
       </Stack>
+      <CreateOrEditSpendingGoalModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleCreateSpendingGoalSubmit}
+      />
     </Container>
   );
 }
